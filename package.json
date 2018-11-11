@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "next": "^7.0.2",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
+  },
+  "name": "taxi-driver-ui",
+  "version": "0.0.1",
+  "description": "UI for github.com/benoror/taxi-driver",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "url": "https://github.com/benoror/taxi-driver-ui",
+    "type": "git"
+  },
+  "author": "Ben Orozco <benoror@gmail.com>",
+  "license": "MIT"
+}

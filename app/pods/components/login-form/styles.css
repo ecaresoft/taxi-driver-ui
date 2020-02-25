@@ -1,0 +1,59 @@
+.form-container {
+    margin: 0 auto;
+    margin-bottom: 2em;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0px 0px 4px darkgrey;
+    color: #343a40;
+    padding: 3em;
+}
+
+.img-tax-engine {
+    margin: 0px 0px 2em 0px;
+    background-color:#2448b7;
+    width: 64px;
+    height: 64px;
+}
+
+form {
+    margin: 0 auto;
+    text-align: initial;
+}
+
+form > * {
+    width: 100%;
+}
+
+input.text-input {
+    border-width: 0px 0px 1px 0px;
+    border-style: outset;
+    background-color: transparent;
+    margin-bottom: 2em;
+    line-height: 2.5em;
+    color: darkgrey;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+.checkbox-container {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.login-submit {
+    background-color: #2448b7;
+    font-size: 18px;
+    color: white;
+    padding: 0.5em;
+    border-radius: 4px;
+    border-style: none;
+}
+
+.darkgray {
+    color: darkgray;
+    font-size: 0.75em;
+    text-align: center;
+}

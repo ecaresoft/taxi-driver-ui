@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'tax-engine-ui',
+    podModulePrefix: 'tax-engine-ui/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',

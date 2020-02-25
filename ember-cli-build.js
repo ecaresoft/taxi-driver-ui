@@ -1,10 +1,21 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const autoprefixer = require('autoprefixer');
+const postCssNested = require('postcss-nested');
+const postCssHexrgba = require('postcss-hexrgba');
+const postCssColorFunction = require('postcss-color-function');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    cssModules: {
+      plugins: [
+        autoprefixer('> 5%'),
+        postCssNested(),
+        postCssHexrgba(),
+        postCssColorFunction()
+      ]
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated

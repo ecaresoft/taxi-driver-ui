@@ -1,0 +1,27 @@
+header {
+  background-color: white;
+  width: 100%;
+  flex: 0 !important;
+  
+  .user-bar {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    margin: 0 auto;
+    padding: 0 2em;
+
+    .user-email {
+      color: darkgrey;
+      font-family: 'Montserrat', sans-serif;
+    }
+  }
+}
+
+
+@media (min-width: 992px) {
+  .user-bar {
+    max-width: 960px;
+  }
+}

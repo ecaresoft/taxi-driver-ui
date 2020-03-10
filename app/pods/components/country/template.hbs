@@ -1,14 +1,8 @@
-<div local-class="country-component">
+<div class="country-component" local-class="country-component">
   <div local-class="country-label">
     <p>{{@countryName}}</p>
   </div>
-  <div local-class="tax-component">
-    <p>Tax component</p>
-  </div>
-  <div local-class="tax-component">
-    <p>This will be replaced</p>
-  </div>
-  <div local-class="tax-component">
-    <p>With the tax-component</p>
-  </div>
+  <Tax @taxName="0%" />
+  <Tax @taxName="16%" />
+  <Tax @taxName="Border" />
 </div>

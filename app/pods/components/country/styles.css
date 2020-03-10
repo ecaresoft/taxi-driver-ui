@@ -15,7 +15,8 @@
     }
   }
 
-  .tax-component {
-    margin-bottom: 2em; 
+  > :global(.tax-component) {
+    font-size: 0.75em;
+    margin: 1em 0;
   }
 }

@@ -1,0 +1,79 @@
+<div class="tax-component" local-class="tax-component">
+
+  <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
+    <div><strong>Tax Name: </strong>{{this.taxName}} </div>
+    <aside class="expand-img" />
+  </button>
+
+  <div local-class="content" class="content">
+
+    <div local-class="input-field date-input">
+      <label>Valid from: </label>
+      <EmberFlatpickr local-class="date-picker" @value={{this.validFrom}} @onChange={{null}}
+        @placeholder="Select Date" />
+      <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
+    </div>
+
+    <div local-class="input-field date-input">
+      <label local-class="input-label">Valid until: </label>
+      <EmberFlatpickr local-class="date-picker" @value={{this.validUntil}} @onChange={{null}}
+        @placeholder="Select Date" />
+      <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
+    </div>
+
+    <div local-class="input-field">
+      <label>Product category:</label><span>{{this.productCategory}}</span>
+    </div>
+
+    <div local-class="input-field bp-input options-input">
+      <label>Business Partner VAT:</label>
+      <select>
+        {{#each this.bpVATOptions as |vatOption|}}
+          {{#if (eq vatOption.value this.bpVATSelected)}}
+            <option value="{{vatOption.value}}" selected>
+              {{vatOption.optText}}
+            </option>
+          {{else}}
+            <option value="{{vatOption.value}}">
+              {{vatOption.optText}}
+            </option>
+          {{/if}}
+        {{/each}}
+      </select>
+    </div>
+
+    <div local-class="input-field witholding-tax options-input">
+      <label>Witholding TAX:</label>
+      <select>
+        {{#each this.witholdingTAXOptions as |taxOption|}}
+          {{#if (eq taxOption.value this.witholdingTAXSelected)}}
+            <option value="{{taxOption.value}}" selected>
+              {{taxOption.optText}}
+            </option>
+          {{else}}
+            <option value="{{taxOption.value}}">
+              {{taxOption.optText}}
+            </option>
+          {{/if}}
+        {{/each}}
+      </select>
+    </div>
+
+    <div local-class="input-field tax-type">
+      <label>TAX Type:</label>
+      <input type="checkbox" /><span>Income</span>
+      <input type="checkbox" /><span>Expense</span>
+    </div>
+
+    <div local-class="input-field tax-rate">
+      <label>TAX Rate:</label><span local-class="tax-rate">{{this.taxRate}}%</span>
+    </div>
+
+    <div local-class="input-field additional-data">
+      <label>Additional Data: </label>
+      <p local-class="additional-data">{{this.additionalData}}</p>
+    </div>
+
+  </div>
+
+</div>

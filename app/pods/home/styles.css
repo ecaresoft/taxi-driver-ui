@@ -4,22 +4,21 @@
   margin: 2em;
   flex-grow: 1;
 
-  > div {
-    margin: 2em;
+  > :global(.country-component) {
+    margin: 1em;
   }
 
   .add-country {
     background-color: transparent;
     border: none;
-    margin: 0.5em;
     font-size: 1.5em;
     min-width: 10em;
     height: 3em;
     padding: 1em;
     font-weight: bolder;
-  }
 
-  .add-country:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

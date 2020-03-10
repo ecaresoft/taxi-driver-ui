@@ -1,3 +1,12 @@
 body {
   background-color: whitesmoke;
 }
+
+button, select, input[type="checkbox"] {
+  cursor: pointer;
+  outline: none;
+}
+
+input, select, button {
+  font-size: inherit;
+}

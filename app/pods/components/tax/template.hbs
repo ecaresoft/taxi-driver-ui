@@ -5,7 +5,14 @@
     <aside class="expand-img" />
   </button>
 
-  <div local-class="content" class="content">
+  <div local-class="content {{unless this.editMode "hard-input"}}" class="content">
+
+    {{#if this.editMode}}
+      <div local-class="input-field name-input">
+        <label>Tax Name: </label>
+        <input type="text" value="{{this.taxName}}" spellcheck="false">
+      </div>
+    {{/if}}
 
     <div local-class="input-field date-input">
       <label>Valid from: </label>
@@ -15,14 +22,19 @@
     </div>
 
     <div local-class="input-field date-input">
-      <label local-class="input-label">Valid until: </label>
+      <label>Valid until: </label>
       <EmberFlatpickr local-class="date-picker" @value={{this.validUntil}} @onChange={{null}}
         @placeholder="Select Date" />
       <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
     </div>
 
-    <div local-class="input-field">
-      <label>Product category:</label><span>{{this.productCategory}}</span>
+    <div local-class="input-field product-category-input">
+      <label>Product category:</label>
+      {{#if this.editMode}}
+        <input type="text" value="{{this.productCategory}}" spellcheck="false">
+      {{else}}
+        <span>{{this.productCategory}}</span>
+      {{/if}}
     </div>
 
     <div local-class="input-field bp-input options-input">
@@ -66,13 +78,43 @@
     </div>
 
     <div local-class="input-field tax-rate">
-      <label>TAX Rate:</label><span local-class="tax-rate">{{this.taxRate}}%</span>
+      <label>TAX Rate:</label>
+      {{#if this.editMode}}
+        <input type="number" spellcheck="false">%
+      {{else}}
+        <span>{{this.taxRate}}%</span>
+      {{/if}}
     </div>
 
     <div local-class="input-field additional-data">
       <label>Additional Data: </label>
-      <p local-class="additional-data">{{this.additionalData}}</p>
+      {{#if this.editMode}}
+        <textarea rows="3" spellcheck="false"></textarea>
+      {{else}}
+        <p local-class="additional-data">{{this.additionalData}}</p>
+      {{/if}}
     </div>
+
+    {{#if this.editMode}}
+      <div local-class="edit-buttons">
+        <button type="submit" {{on "click" (fn this.saveTAXEditions)}}>SAVE</button>
+        <button type="button" {{on "click" (fn this.discardTAXEditions)}}>DISCARD</button>
+      </div>
+    {{/if}}
+
+    {{#unless this.editMode}}
+      <div local-class="display-menu dropdown">
+        <button local-class="more dropbtn {{if this.panelMoreOpen "open" "closed"}}" type="button"
+          {{on "click" (fn this.toggleOptionsPanel)}} />
+        {{#if this.panelMoreOpen}}
+          <div local-class="dropdown-content">
+            <button {{on "click" (fn this.toggleEditMode)}} type="button"><img src="/assets/icons/create-24px.svg"
+                alt="presentation" />Edit</button>
+            <button type="button"><img src="/assets/icons/delete-24px.svg" alt="presentation" />Delete</button>
+          </div>
+        {{/if}}
+      </div>
+    {{/unless}}
 
   </div>
 

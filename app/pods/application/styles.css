@@ -10,3 +10,7 @@ button, select, input[type="checkbox"] {
 input, select, button {
   font-size: inherit;
 }
+
+button, img {
+  background-size: cover;
+}

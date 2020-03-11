@@ -14,6 +14,10 @@
   background-color: white;
   border-radius: 8px;
   box-shadow: 4px 4px 4px rgba(0,0,0,0.05);
+
+  button:focus, select:focus, select option {
+    outline: none;
+  }
   
   .collapsible {
     display: flex;
@@ -36,7 +40,6 @@
       height: 2.5em;
       width: 2.5em;
       border: none;
-      background-size: cover;
     }
 
     * {
@@ -47,6 +50,19 @@
   .active, .collapsible:hover {
     background-color: #eee;
   }
+
+  .hard-input {
+
+    input, select, .date-picker, textarea {
+      pointer-events: none;
+      color: rgba(0,0,0,.65);
+      background-color: #f8f8f8 !important;
+    }
+
+    .input-field {
+      margin: 1em 0 !important;
+    }
+  }
   
   .content {
     max-height: 0;
@@ -56,11 +72,16 @@
     color: rgba(0,0,0,.65);
     transition: opacity 0.4s ease, max-height 0.4s ease;
 
-    input, select {
+    input, select, textarea {
       border-radius: 4px;
       border: 1px solid #eee;
-    }
+      padding: 0.25em;
 
+      &:focus {
+        border: 1px solid blue;
+      }
+    }
+    
     input[type='checkbox'] {
       margin: 0 4px;
       width: 1.25em;
@@ -69,13 +90,20 @@
 
     .input-field {
       display: flex;
-      margin: 1em 0;
+      margin: 0.5em 0;
       align-items: center;
       min-height: 2em;
 
       label {
         font-weight: bold;
         margin-right: 0.25em;
+        white-space: nowrap;
+      }
+    }
+
+    .name-input {
+      input {
+        width: 100%;
       }
     }
 
@@ -84,7 +112,6 @@
       label {
         margin-top: 0.25em;
         margin-bottom: 0.25em;
-        white-space: nowrap;
       }
 
       .date-picker {
@@ -99,6 +126,12 @@
         pointer-events: none;
         height: 1.5em;
         padding: 0.25em;
+      }
+    }
+
+    .product-category-input {
+      input {
+        width: 100%;
       }
     }
 
@@ -120,12 +153,15 @@
       
       select:focus {
         outline: none;
+        background-color: transparent;
       }
       
       select option {
         outline: none;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+        color: black;
         margin: 0.5em 0;
+        background-color: transparent;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
         box-shadow: 4px 4px 4px rgba(0,0,0,0.05);
       }
     }
@@ -137,12 +173,105 @@
       }
     }
 
+    .tax-rate {
+
+      input {
+        width: 6em;
+      }
+    }
+
     .additional-data {
       display: block;
 
       p {
         margin: 0;
         margin-left: 0.5em
+      }
+
+      textarea {
+        width: calc(100% - 0.5em);
+        font-size: 12px;
+        resize: none;
+        outline: none;
+      }
+    }
+
+    .display-menu {
+      width: fit-content;
+      float: right;
+      right: 24px;
+      flex-direction: column;
+      display: inline-block;
+
+      button {
+
+        img {
+          pointer-events: none;
+        }
+      }
+
+
+      button.more {
+        height: 2em;
+        width: 2em;
+        border: none;
+        background-color: transparent;
+        margin-bottom: 1em;
+        float: right;
+      }
+
+      button.more.closed {
+        background-image: url('/assets/icons/more_horiz-24px.svg');
+      }
+
+      button.more.open {
+        background-image: url('/assets/icons/clear-24px.svg');
+      }
+
+      .dropdown-content {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        min-width: 96px;
+        border-radius: 4px;
+        transform: translateX(-100%);
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        background-color: white;
+        transition: opacity 0.15s ease;
+
+        button {
+          text-align: left;
+          border: none;
+          border-radius: 4px;
+          margin: 4px;
+          background-color: transparent;
+
+          img {
+            margin-bottom: -4px;
+            margin-right: 0.25em;
+            height: 1.5em;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+
+    .edit-buttons {
+      margin-bottom: 1em;
+      
+      button {
+        line-height: 1.5em;
+        font-weight: bold;
+        border-radius: 4px;
+        color: darkgray;
+        background-color: transparent;
+        border: 1px solid blue;
+      }
+
+      button[type='submit'] {
+        background-color: blue;
+        color: white;
       }
     }
   }

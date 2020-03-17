@@ -225,7 +225,7 @@
       }
 
       button.more.open {
-        background-image: url('/assets/icons/clear-24px.svg');
+        background-image: url('/assets/icons/clear-blue-24px.svg');
       }
 
       .dropdown-content {
@@ -276,4 +276,68 @@
     }
   }
 }
+
+:global(.save-changes-modal) {
+  position: relative;
+  text-align: center;
+  
+  > :global(.close-modal-icon) {
+    position: absolute;
+    right: 0;
+    background-image: url('/assets/icons/clear-black-24px.svg');
+    background-color: transparent;
+    border: none;
+    height: 24px;
+    width: 24px;
+  }
+
+  > :global(.warning-img) {
+    height: 4em;
+    margin-top: 4em;
+  }
+
+  > p {
+    text-align: center;
+    font-weight: bold;
+    padding: 0 4em;
+  }
+
+  > :global(.edit-buttons) {
+    margin-bottom: 4em;
+    text-align: center;
+
+    button {
+      line-height: 1.5em;
+      font-weight: bold;
+      border-radius: 4px;
+      color: darkgray;
+      background-color: transparent;
+      border: 1px solid blue;
+    }
+    
+    button[type='submit'] {
+      background-color: blue;
+      color: white;
+    }
+  }
+}
+
+:global(.save-confirmation-modal) {
+  > p {
+    margin: 4em 0;
+    padding: 0 2em;
+    font-weight: bold;
+  }
+  
+  button {
+    margin-left: 100%;
+    transform: translateX(-100%);
+    background-image: url('/assets/icons/clear-black-24px.svg');
+    background-color: transparent;
+    border: none;
+    height: 24px;
+    width: 24px;
+  }
+}
+
   

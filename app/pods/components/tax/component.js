@@ -6,6 +6,8 @@ import { tracked } from '@glimmer/tracking';
 export default class TaxComponent extends Component {
   @tracked editMode = false
   @tracked panelMoreOpen = false;
+  @tracked saveModalOpen = false;
+  @tracked showConfirmationModal = false;
 
   @tracked taxName = this.args.taxName;
   @tracked validFrom = new Date(2000, 0);
@@ -54,10 +56,30 @@ export default class TaxComponent extends Component {
   @action
   saveTAXEditions() {
     // Save TAX Editions logic
+    this.saveModalOpen = true;
   }
 
   @action
   discardTAXEditions() {
     this.editMode = false;
+  }
+
+  @action
+  saveNewTax() {
+    // Save new tax logic
+    this.saveModalOpen = false;
+    this.showConfirmationModal = true;
+  }
+
+  @action
+  closeNewTAXPanel() {
+    this.args.closeNewTAXPanel();
+  }
+
+  @action
+  closeModals() {
+    // close save modal logic
+    this.saveModalOpen = false;
+    this.showConfirmationModal = false;
   }
 }

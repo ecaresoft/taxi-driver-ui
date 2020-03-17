@@ -116,6 +116,29 @@
       </div>
     {{/unless}}
 
+    {{#if this.saveModalOpen}}
+      <ModalDialog @translucentOverlay="true">
+        <div class="save-changes-modal">
+          <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
+          <img src="/assets/icons/warning-24px.svg" class="warning-img" alt="" role="presentation" />
+          <p>Are you sure you want to save these changes?</p>
+          <div class="edit-buttons">
+            <button type="submit" {{on "click" (fn this.saveNewTax)}}>SAVE</button>
+            <button type="button" {{on "click" (fn this.closeNewTAXPanel)}}>DISCARD</button>
+          </div>
+        </div>
+      </ModalDialog>
+    {{/if}}
+
+    {{#if this.showConfirmationModal}}
+      <ModalDialog @translucentOverlay="true">
+        <div class="save-confirmation-modal">
+          <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
+          <p>Changes have been successfully saved!</p>
+        </div>
+      </ModalDialog>
+    {{/if}}
+
   </div>
 
 </div>

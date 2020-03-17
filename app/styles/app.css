@@ -1,0 +1,51 @@
+/* @import "ember-modal-dialog/ember-modal-structure.css"; */
+:global(.ember-modal-dialog) {
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px #222;
+  padding: 10px;
+}
+:global(.ember-modal-overlay.translucent) {
+  background-color: rgba(128, 128, 128, .2);
+}
+
+/* @import "ember-modal-dialog/ember-modal-appearance.css"; */
+:global(.ember-modal-dialog) {
+  z-index: 51;
+  position: fixed;
+}
+:global(.ember-modal-dialog.emd-in-place) {
+  position: static;
+}
+:global(.ember-modal-wrapper.emd-static.emd-wrapper-target-attachment-center) :global(.ember-modal-dialog) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+:global(.ember-modal-wrapper.emd-animatable.emd-wrapper-target-attachment-center) {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+:global(.ember-modal-wrapper.emd-animatable.emd-wrapper-target-attachment-center) :global(.ember-modal-overlay) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+:global(.ember-modal-wrapper.emd-animatable) :global(.ember-modal-dialog) {
+  position: relative;
+}
+:global(.ember-modal-overlay) {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}

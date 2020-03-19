@@ -31,22 +31,11 @@ body {
 .tax-engine-wallpaper {
     background-color: #3254cd;
     display: flex;
-    align-items: center;
-
-    > div {
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    p {
-        color: white;
-        font-weight: bolder;
-        font-size: 2em;
-    }
     
     img {
-        width: 9em;
-        height: 9em;
+        margin: auto;
+        width: 50%;
+        height: 50%;
     }
 }
 

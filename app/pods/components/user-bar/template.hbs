@@ -1,4 +1,9 @@
-<div local-class="user-bar">
-  <img src="" alt="TaxEngine">
-  <p local-class="user-email">user@ecaresoft.com</p>
-</div>
+<header>
+  <div local-class="user-bar">
+    <img src="/assets/logos/tax_engine-label.svg" alt="TaxEngine">
+    <div>
+      <p local-class="user-email">user@ecaresoft.com</p>
+      <button type="button" local-class="logout" {{on "click" (fn this.logout)}}></button>
+    </div>
+  </div>
+</header>

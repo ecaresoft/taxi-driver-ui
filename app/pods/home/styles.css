@@ -22,3 +22,9 @@
     }
   }
 }
+
+.powered-by-ecs {
+  margin-bottom: 1em;
+  margin-left: 2em;
+  width: fit-content;
+}

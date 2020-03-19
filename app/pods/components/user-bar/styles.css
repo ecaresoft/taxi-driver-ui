@@ -10,11 +10,30 @@ header {
     justify-content: space-between;
     height: 56px;
     margin: 0 auto;
-    padding: 0 2em;
+    padding: 0 0.5em;
+
+    > img {
+      height: 40px;
+    }
 
     .user-email {
       color: darkgrey;
       font-family: 'Montserrat', sans-serif;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+
+      button.logout {
+        width: 1em;
+        height: 1em;
+        background-color: transparent;
+        border: none;
+        margin: 8px;
+        background-image: url("/assets/icons/power_settings_new-24px.svg");
+        /* TODO: Change url to a better image */
+      }
     }
   }
 }
@@ -23,5 +42,6 @@ header {
 @media (min-width: 992px) {
   .user-bar {
     max-width: 960px;
+    padding: 0 2em;
   }
 }

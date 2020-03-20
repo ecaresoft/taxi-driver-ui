@@ -3,9 +3,16 @@
   <Country @countryName="Mexico" />
   <Country @countryName="Argentina" />
   <Country @countryName="Kingdom of Saudi Arabia" />
-
-  <button local-class="add-country" type="button">
-    + Add country
-  </button>
 </div>
+
+<button local-class="new-tax" type="button" {{on "click" (fn this.displayNewTaxModal)}}>
+  +
+</button>
+
 <img src="/assets/logos/powered_by_ecs.svg" alt="powered by Ecaresoft" local-class="powered-by-ecs" />
+
+{{#if this.displayNewTax}}
+  <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeNewTaxModal}}>
+    <Tax @newTaxMode="true" @saveNewTax={{this.saveNewTax}} @closeNewTaxModal={{this.closeNewTaxModal}} />
+  </ModalDialog>
+{{/if}}

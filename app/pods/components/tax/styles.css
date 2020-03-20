@@ -18,6 +18,10 @@
   button:focus, select:focus, select option {
     outline: none;
   }
+
+  select {
+    background-color: white;
+  }
   
   .collapsible {
     display: flex;
@@ -34,12 +38,12 @@
     outline: none;
 
     aside {
-      background-color: transparent;
-      border: none;
-      background-image: url("/assets/icons/expand_more-24px.svg");
       height: 2.5em;
       width: 2.5em;
       border: none;
+      background-size: cover;
+      background-color: transparent;
+      background-image: url("/assets/icons/expand_more-24px.svg");
     }
 
     * {
@@ -277,9 +281,10 @@
   }
 }
 
-:global(.save-changes-modal) {
+:global(.save-editions-modal) {
   position: relative;
   text-align: center;
+  color: #444;
   
   > :global(.close-modal-icon) {
     position: absolute;
@@ -322,7 +327,9 @@
   }
 }
 
-:global(.save-confirmation-modal) {
+:global(.confirmation-modal) {
+  color: #444;
+  
   > p {
     margin: 4em 0;
     padding: 0 2em;

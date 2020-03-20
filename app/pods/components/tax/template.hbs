@@ -1,13 +1,28 @@
-<div class="tax-component" local-class="tax-component">
+<div class="tax-component {{if this.shouldDisplayOpenCard "open"}}" local-class="tax-component">
 
-  <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
-    <div><strong>Tax Name: </strong>{{this.taxName}} </div>
-    <aside class="expand-img" />
-  </button>
+  {{#if this.shouldDisplayCollapsibleButton}}
+    <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
+      <div><strong>Tax Name: </strong>{{this.taxName}} </div>
+      <aside class="expand-img" />
+    </button>
+  {{/if}}
 
-  <div local-class="content {{unless this.editMode "hard-input"}}" class="content">
+  <div local-class="content {{if this.shouldContainHardInput "hard-input"}}" class="content">
 
-    {{#if this.editMode}}
+    {{#if this.shouldDisplayCountryField}}
+      <div local-class="input-field country-input">
+        <label>Country: </label>
+        <select>
+          {{#each this.countryOptions as |countryOption|}}
+            <option value="{{countryOption.value}}">
+              {{countryOption.optText}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    {{/if}}
+
+    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field name-input">
         <label>Tax Name: </label>
         <input type="text" value="{{this.taxName}}" spellcheck="false">
@@ -28,14 +43,17 @@
       <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
     </div>
 
-    <div local-class="input-field product-category-input">
-      <label>Product category:</label>
-      {{#if this.editMode}}
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field product-category-input">
+        <label>Product category:</label>
         <input type="text" value="{{this.productCategory}}" spellcheck="false">
-      {{else}}
+      </div>
+    {{else}}
+      <div local-class="input-field product-category-input">
+        <label>Product category:</label>
         <span>{{this.productCategory}}</span>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
 
     <div local-class="input-field bp-input options-input">
       <label>Business Partner VAT:</label>
@@ -77,36 +95,48 @@
       <input type="checkbox" /><span>Expense</span>
     </div>
 
-    <div local-class="input-field tax-rate">
-      <label>TAX Rate:</label>
-      {{#if this.editMode}}
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field tax-rate">
+        <label>TAX Rate:</label>
         <input type="number" spellcheck="false">%
-      {{else}}
+      </div>
+    {{else}}
+      <div local-class="input-field tax-rate">
+        <label>TAX Rate:</label>
         <span>{{this.taxRate}}%</span>
-      {{/if}}
-    </div>
-
-    <div local-class="input-field additional-data">
-      <label>Additional Data: </label>
-      {{#if this.editMode}}
-        <textarea rows="3" spellcheck="false"></textarea>
-      {{else}}
-        <p local-class="additional-data">{{this.additionalData}}</p>
-      {{/if}}
-    </div>
-
-    {{#if this.editMode}}
-      <div local-class="edit-buttons">
-        <button type="submit" {{on "click" (fn this.saveTAXEditions)}}>SAVE</button>
-        <button type="button" {{on "click" (fn this.discardTAXEditions)}}>DISCARD</button>
       </div>
     {{/if}}
 
-    {{#unless this.editMode}}
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field additional-data">
+        <label>Additional Data: </label>
+        <textarea rows="3" spellcheck="false"></textarea>
+      </div>
+    {{else}}
+      <div local-class="input-field additional-data">
+        <label>Additional Data: </label>
+        <p local-class="additional-data">{{this.additionalData}}</p>
+      </div>
+    {{/if}}
+
+    {{#if this.newTaxMode}}
+      <div local-class="edit-buttons">
+        <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
+        <button type="submit" {{on "click" (fn this.openSaveModal)}}>SAVE</button>
+      </div>
+    {{/if}}
+    {{#if this.editMode}}
+      <div local-class="edit-buttons">
+        <button type="button" {{on "click" (fn this.discardTaxEditions)}}>DISCARD</button>
+        <button type="submit" {{on "click" (fn this.openSaveModal)}}>SAVE</button>
+      </div>
+    {{/if}}
+
+    {{#if this.shouldDisplayMoreButton}}
       <div local-class="display-menu dropdown">
-        <button local-class="more dropbtn {{if this.panelMoreOpen "open" "closed"}}" type="button"
+        <button local-class="more dropbtn {{if this.shouldDisplayMorePanel "open" "closed"}}" type="button"
           {{on "click" (fn this.toggleOptionsPanel)}} />
-        {{#if this.panelMoreOpen}}
+        {{#if this.shouldDisplayMorePanel}}
           <div local-class="dropdown-content">
             <button {{on "click" (fn this.toggleEditMode)}} type="button"><img src="/assets/icons/create-24px.svg"
                 alt="presentation" />Edit</button>
@@ -114,28 +144,44 @@
           </div>
         {{/if}}
       </div>
-    {{/unless}}
+    {{/if}}
 
-    {{#if this.saveModalOpen}}
+    {{#if this.shouldDisplaySaveModal}}
       <ModalDialog @translucentOverlay="true">
-        <div class="save-changes-modal">
+        <div class="save-editions-modal">
           <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
           <img src="/assets/icons/warning-24px.svg" class="warning-img" alt="" role="presentation" />
           <p>Are you sure you want to save these changes?</p>
-          <div class="edit-buttons">
-            <button type="submit" {{on "click" (fn this.saveNewTax)}}>SAVE</button>
-            <button type="button" {{on "click" (fn this.closeNewTAXPanel)}}>DISCARD</button>
-          </div>
+          {{#if this.editMode}}
+            <div class="edit-buttons">
+              <button type="button" {{on "click" (fn this.closeModals)}}>DISCARD</button>
+              <button type="submit" {{on "click" (fn this.saveTaxEditions)}}>SAVE</button>
+            </div>
+          {{/if}}
+          {{#if this.newTaxMode}}
+            <div class="edit-buttons">
+              <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
+              <button type="submit" {{on "click" (fn this.saveNewTax)}}>SAVE</button>
+            </div>
+          {{/if}}
         </div>
       </ModalDialog>
     {{/if}}
 
-    {{#if this.showConfirmationModal}}
+    {{#if this.shouldDisplayConfirmationModal}}
       <ModalDialog @translucentOverlay="true">
-        <div class="save-confirmation-modal">
-          <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
-          <p>Changes have been successfully saved!</p>
-        </div>
+        {{#if this.editMode}}
+          <div class="confirmation-modal">
+            <button type="button" class="close-modal-icon" {{on "click" (fn this.finishTaxEditionsSave)}} />
+            <p>Changes have been successfully saved!</p>
+          </div>
+        {{/if}}
+        {{#if this.newTaxMode}}
+          <div class="confirmation-modal">
+            <button type="button" class="close-modal-icon" {{on "click" (fn this.closeNewTaxModal)}} />
+            <p>Changes have been successfully saved!</p>
+          </div>
+        {{/if}}
       </ModalDialog>
     {{/if}}
 

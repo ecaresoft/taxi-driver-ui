@@ -4,11 +4,16 @@ import { tracked } from '@glimmer/tracking';
 
 
 export default class TaxComponent extends Component {
-  @tracked editMode = false
-  @tracked panelMoreOpen = false;
-  @tracked saveModalOpen = false;
-  @tracked showConfirmationModal = false;
+  @tracked editMode = false;
+  @tracked newTaxMode = this.args.newTaxMode;
 
+  @tracked countrySelected = 'mx';
+  @tracked countryOptions = [
+    { optText: 'Mexico', value: 'mx' },
+    { optText: 'United States of America', value: 'us' },
+    { optText: 'Serbia', value: 'sb' },
+    { optText: 'Colombia', value: 'co' }
+  ];
   @tracked taxName = this.args.taxName;
   @tracked validFrom = new Date(2000, 0);
   @tracked validUntil = new Date(2015, 0);
@@ -29,57 +34,96 @@ export default class TaxComponent extends Component {
   @tracked TAXTypeIncomeCheck = false;
   @tracked TAXTypeExpenseCheck = false;
   @tracked taxRate = 0;
-  @tracked additionalData = "Only applicable to certain processes and dataframes"
+  @tracked additionalData = "Only applicable to certain processes and dataframes";
 
-  @action
-  toggleOpenCard(event) {
-    var component = event.target.parentNode;
-    component.classList.toggle("open");
+  @tracked shouldDisplayOpenCard = this.newTaxMode;
+  @tracked shouldDisplayMorePanel = false;
+  @tracked shouldDisplaySaveModal = false;
+  @tracked shouldDisplayConfirmationModal = false;
+
+  get shouldDisplayCollapsibleButton() {
+    return !(this.newTaxMode);
+  }
+  get shouldDisplayDropdownMenu() {
+    return !(this.editMode || this.newTaxMode);
+  }
+  get shouldContainHardInput() {
+    return !(this.editMode || this.newTaxMode);
+  }
+  get shouldDisplayCountryField() {
+    return this.newTaxMode;
+  }
+  get shouldDisplayInputs() {
+    return (this.editMode || this.newTaxMode);
+  }
+  get shouldDisplayMoreButton() {
+    return !(this.editMode || this.newTaxMode);
   }
 
   @action
-  isSelectedOption(option, defaultOption) {
-    return option === defaultOption;
+  toggleOpenCard() {
+    this.shouldDisplayOpenCard = !this.shouldDisplayOpenCard;
   }
 
   @action
   toggleOptionsPanel() {
-    this.panelMoreOpen = !this.panelMoreOpen;
+    this.shouldDisplayMorePanel = !this.shouldDisplayMorePanel;
   }
 
   @action
   toggleEditMode() {
     this.editMode = !this.editMode;
-    this.panelMoreOpen = false;
+    this.shouldDisplayMorePanel = false;
   }
 
   @action
-  saveTAXEditions() {
-    // Save TAX Editions logic
-    this.saveModalOpen = true;
-  }
-
-  @action
-  discardTAXEditions() {
+  discardTaxEditions() {
     this.editMode = false;
   }
 
   @action
-  saveNewTax() {
-    // Save new tax logic
-    this.saveModalOpen = false;
-    this.showConfirmationModal = true;
+  openSaveModal() {
+    // Save TAX Editions logic
+    this.shouldDisplaySaveModal = true;
   }
 
   @action
-  closeNewTAXPanel() {
-    this.args.closeNewTAXPanel();
+  saveTaxEditions() {
+    // Save tax editions logic
+    this.shouldDisplaySaveModal = false;
+    this.shouldDisplayConfirmationModal = true;
   }
 
   @action
   closeModals() {
     // close save modal logic
-    this.saveModalOpen = false;
-    this.showConfirmationModal = false;
+    this.shouldDisplaySaveModal = false;
+    this.shouldDisplayConfirmationModal = false;
+  }
+
+  @action
+  finishTaxEditionsSave() {
+    this.closeModals();
+    this.editMode = false;
+    this.shouldDisplayOpenCard = false;
+  }
+
+  @action
+  openTaxSaveModal() {
+    // Save TAX Editions logic
+    this.shouldDisplaySaveModal = true;
+  }
+
+  /* Home controller */
+  @action
+  saveNewTax() {
+    this.args.saveNewTax();
+    this.shouldDisplaySaveModal = false;
+    this.shouldDisplayConfirmationModal = true;
+  }
+
+  @action
+  closeNewTaxModal() {
+    this.args.closeNewTaxModal();
   }
 }

@@ -3,20 +3,27 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class HomeController extends Controller {
-  @tracked displayNewTax = false;
+  @tracked shouldDisplayNewTax = false;
+  @tracked shouldDisplayHistoryModal = false;
 
   @action
   displayNewTaxModal() {
-    this.displayNewTax = true;
+    this.shouldDisplayNewTax = true;
   }
 
   @action
-  closeNewTaxModal() {
-    this.displayNewTax = false;
+  closeHomeModals() {
+    this.shouldDisplayNewTax = false;
+    this.shouldDisplayHistoryModal = false;
   }
 
   @action
   saveNewTax() {
     // Save New Tax Logic
+  }
+
+  @action
+  openHistoryModal() {
+    this.shouldDisplayHistoryModal = true;
   }
 }

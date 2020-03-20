@@ -1,4 +1,12 @@
 <UserBar />
+
+<div local-class="btn-history-container">
+  <button type="button" {{on "click" (fn this.openHistoryModal)}}>
+    <span>HISTORY</span>
+    <img alt="" role="presentation" src="/assets/icons/restore-white-18dp.svg" />
+  </button>
+</div>
+
 <div local-class="countries-container">
   <Country @countryName="Mexico" />
   <Country @countryName="Argentina" />
@@ -11,8 +19,18 @@
 
 <img src="/assets/logos/powered_by_ecs.svg" alt="powered by Ecaresoft" local-class="powered-by-ecs" />
 
-{{#if this.displayNewTax}}
-  <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeNewTaxModal}}>
-    <Tax @newTaxMode="true" @saveNewTax={{this.saveNewTax}} @closeNewTaxModal={{this.closeNewTaxModal}} />
+{{#if this.shouldDisplayNewTax}}
+  <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeHomeModals}}>
+    <Tax @newTaxMode="true" @saveNewTax={{this.saveNewTax}} @closeNewTaxModal={{this.closeHomeModals}} />
+  </ModalDialog>
+{{/if}}
+
+{{#if this.shouldDisplayHistoryModal}}
+  <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeHomeModals}}>
+    <div local-class="modal-history">
+      <button type="button" local-class="close-modal-icon" {{on "click" (fn this.closeHomeModals)}} />
+      <label>Editions history:</label>
+      <p>Tax logs</p>
+    </div>
   </ModalDialog>
 {{/if}}

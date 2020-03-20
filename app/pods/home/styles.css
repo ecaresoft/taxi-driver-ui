@@ -5,8 +5,7 @@ body {
 .countries-container {
   display: flex;
   overflow-x: overlay;
-  margin: 2em;
-  margin-bottom: 1em;
+  margin: 0 2em;
   flex-grow: 1;
 
   > :global(.country-component) {
@@ -16,6 +15,34 @@ body {
 
 :global(.tax-component) {
   font-size: 0.75em;
+}
+
+.btn-history-container {
+  justify-content: flex-end;
+  display: flex;
+
+  button {
+    align-items: center;
+    display: flex;
+    margin: 1em;
+    box-shadow: rgba(0,0,0,0.35) 2px 2px 4px;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5em;
+    background-color: blue;
+    
+    span {
+      margin-right: 0.5em;
+      font-size: 0.75em;
+      font-weight: bold;
+      color: white;
+    }
+
+    > img {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 
 .new-tax {
@@ -34,8 +61,30 @@ body {
 }
 
 .powered-by-ecs {
-  margin-bottom: 1em;
+  margin: 1em 0;
   margin-left: 2em;
   width: fit-content;
   height: 2em;
+}
+
+.modal-history {
+  width: 75vw;
+  height: 75vh;
+
+  label {
+    border-bottom: rgba(0,0,0,0.35) solid 2px;
+    margin-bottom: 2em;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .close-modal-icon {
+    position: absolute;
+    right: 10px;
+    background-image: url('/assets/icons/clear-black-24px.svg');
+    background-color: transparent;
+    border: none;
+    height: 24px;
+    width: 24px;
+  }
 }

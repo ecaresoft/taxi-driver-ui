@@ -3,13 +3,13 @@
   
   .country-label {
     font-size: 1.25em;
-    border-bottom: darkgray solid 3px;
+    border-bottom: var(--text-color-lighter) solid 3px;
     margin-bottom: 2em;
 
     p {
       width: min-content;
       margin: 0 0 -3px 1em;
-      border-bottom: blue solid 3px;
+      border-bottom: var(--primary-color) solid 3px;
       line-height: 2em;
       white-space: nowrap;
     }

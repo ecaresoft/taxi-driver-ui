@@ -1,5 +1,16 @@
 body {
-  background-color: whitesmoke;
+  background-color: #f7f9fc;
+
+  --primary-color: #3354cc;
+  --primary-color-dark: #2141b6;
+  --primary-color-light: #3376f6;
+
+  --bg-light: #f8f8f8;
+  --bg-dark: #eeeeee;
+
+  --text-color: rgba(0,0,0,0.65);
+  --text-color-light: rgba(0,0,0,0.40);
+  --text-color-lighter: rgba(0,0,0,0.20);
 }
 
 button, select, input[type="checkbox"] {

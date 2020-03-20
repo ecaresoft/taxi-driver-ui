@@ -29,7 +29,7 @@ body {
 }
 
 .tax-engine-wallpaper {
-    background-color: #3254cd;
+    background-color: var(--primary-color);
     display: flex;
     
     img {
@@ -43,7 +43,6 @@ body {
     display: flex;
     align-items: center;
     text-align: center;
-    background-color: whitesmoke;
 }
 
 .login-form > div {

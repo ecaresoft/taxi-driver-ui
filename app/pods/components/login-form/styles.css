@@ -1,11 +1,12 @@
 .form-container {
     margin: 0 auto;
     margin-bottom: 2em;
-    text-align: center;
-    border-radius: 16px;
     box-shadow: 0px 0px 4px darkgrey;
-    color: #343a40;
+    border-radius: 16px;
     padding: 3em;
+    background-color: white;
+    text-align: center;
+    color: var(--text-color);
 }
 
 .img-tax-engine {
@@ -29,7 +30,7 @@ input.text-input {
     background-color: transparent;
     margin-bottom: 2em;
     line-height: 2.5em;
-    color: darkgrey;
+    color: var(--text-color-light);
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -43,7 +44,7 @@ input:focus {
 }
 
 .login-submit {
-    background-color: #2448b7;
+    background-color: var(--primary-color-dark);
     font-size: 18px;
     color: white;
     padding: 0.5em;
@@ -52,7 +53,7 @@ input:focus {
 }
 
 .darkgray {
-    color: darkgray;
+    color: var(--text-color-lighter);
     font-size: 0.75em;
     text-align: center;
 }

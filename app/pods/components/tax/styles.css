@@ -28,7 +28,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: transparent;
-    color: #444;
+    color: var(--text-color);
     cursor: pointer;
     padding: 0.5em 1em;
     border-radius: 8px;
@@ -52,15 +52,15 @@
   }
   
   .active, .collapsible:hover {
-    background-color: #eee;
+    background-color: var(--bg-dark);
   }
 
   .hard-input {
 
     input, select, .date-picker, textarea {
       pointer-events: none;
-      color: rgba(0,0,0,.65);
-      background-color: #f8f8f8 !important;
+      color: var(--text-color);
+      background-color: var(--bg-light) !important;
     }
 
     .input-field {
@@ -73,7 +73,7 @@
     opacity: 0;
     padding: 0 1em;
     overflow: hidden;
-    color: rgba(0,0,0,.65);
+    color: var(--text-color);
     transition: opacity 0.4s ease, max-height 0.4s ease;
 
     input, select, textarea {
@@ -82,7 +82,7 @@
       padding: 0.25em;
 
       &:focus {
-        border: 1px solid blue;
+        border: 1px solid var(--primary-color);
       }
     }
     
@@ -151,7 +151,7 @@
         height: 2em;
         padding: 0 8px;
         margin: 4px 0;
-        color: rgba(0,0,0,.65);
+        color: var(--text-color);
         background-color: transparent;
       }
       
@@ -162,10 +162,10 @@
       
       select option {
         outline: none;
-        color: black;
+        color: var(--text-color);
         margin: 0.5em 0;
         background-color: transparent;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+        text-shadow: 0 1px 0 var(--text-color-light);
         box-shadow: 4px 4px 4px rgba(0,0,0,0.05);
       }
     }
@@ -268,13 +268,13 @@
         line-height: 1.5em;
         font-weight: bold;
         border-radius: 4px;
-        color: darkgray;
+        color: var(--text-color-lighter);
         background-color: transparent;
-        border: 1px solid blue;
+        border: 1px solid var(--primary-color-dark);
       }
 
       button[type='submit'] {
-        background-color: blue;
+        background-color: var(--primary-color);
         color: white;
       }
     }
@@ -284,7 +284,7 @@
 :global(.save-editions-modal) {
   position: relative;
   text-align: center;
-  color: #444;
+  color: var(--text-color);
   
   > :global(.close-modal-icon) {
     position: absolute;
@@ -315,20 +315,20 @@
       line-height: 1.5em;
       font-weight: bold;
       border-radius: 4px;
-      color: darkgray;
+      color: var(--text-color-lighter);
       background-color: transparent;
-      border: 1px solid blue;
+      border: 1px solid var(--primary-color-dark);
     }
     
     button[type='submit'] {
-      background-color: blue;
+      background-color: var(--primary-color);
       color: white;
     }
   }
 }
 
 :global(.confirmation-modal) {
-  color: #444;
+  color: var(--text-color);
   
   > p {
     margin: 4em 0;

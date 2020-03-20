@@ -17,7 +17,7 @@ header {
     }
 
     .user-email {
-      color: darkgrey;
+      color: var(--text-color-light);
       font-family: 'Montserrat', sans-serif;
     }
 

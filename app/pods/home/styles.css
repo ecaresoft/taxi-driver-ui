@@ -29,7 +29,7 @@ body {
     border: none;
     border-radius: 4px;
     padding: 0.5em;
-    background-color: blue;
+    background-color: var(--primary-color-light);
     
     span {
       margin-right: 0.5em;
@@ -55,7 +55,7 @@ body {
   border-radius: 50%;
   width: 1.5em;
   height: 1.5em;
-  background-color: blue;
+  background-color: var(--primary-color-dark);
   font-size: 2em;
   color: white;
 }

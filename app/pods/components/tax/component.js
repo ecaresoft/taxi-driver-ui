@@ -51,7 +51,7 @@ export default class TaxComponent extends Component {
     return !(this.editMode || this.newTaxMode);
   }
   get shouldDisplayCountryField() {
-    return this.newTaxMode;
+    return this.editMode || this.newTaxMode;
   }
   get shouldDisplayInputs() {
     return (this.editMode || this.newTaxMode);

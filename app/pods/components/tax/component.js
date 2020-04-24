@@ -41,6 +41,23 @@ export default class TaxComponent extends Component {
   @tracked shouldDisplaySaveModal = false;
   @tracked shouldDisplayConfirmationModal = false;
 
+  get extraFields() {
+    return {
+      vars: {
+        escala: 'IF(AND(subTotal>0,subTotal<=5000), 0.05, 0.10',
+        retAll: 'IF(subTotal > 10700, escala, 0.06)',
+        taxable: 'subTotal * retAll',
+        extraVars: {
+          superRet: 'IF(subTotal > 10700, escala, 0.06)',
+          extraTaxable: 'subTotal * retAll'
+        },
+        anotherVar: 'Otra variable'
+      },
+      rate: 'retAll',
+      amount: 'IF(taxable <= 150, 150, taxable)'
+    };
+  }
+
   get shouldDisplayCollapsibleButton() {
     return !(this.newTaxMode);
   }

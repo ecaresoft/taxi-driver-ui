@@ -1,0 +1,28 @@
+.field-key {
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+
+.input-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.input-field input {
+  flex-grow: 1;
+  margin-left: 0.75em;
+}
+
+.extra-field-container {
+  margin-bottom: 1em;
+  padding-left: 0.5em;
+  border-left: 2px solid darkgray;
+}
+
+.extra-field-label {
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.25em;
+  display: inline-block;
+}

@@ -107,16 +107,8 @@
       </div>
     {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
-      <div local-class="input-field additional-data">
-        <label>Additional Data: </label>
-        <textarea rows="3" spellcheck="false"></textarea>
-      </div>
-    {{else}}
-      <div local-class="input-field additional-data">
-        <label>Additional Data: </label>
-        <p local-class="additional-data">{{this.additionalData}}</p>
-      </div>
+    {{#if this.extraFields}}
+      <ExtraField @field={{this.extraFields}} @editMode={{this.editMode}} />
     {{/if}}
 
     {{#if this.newTaxMode}}

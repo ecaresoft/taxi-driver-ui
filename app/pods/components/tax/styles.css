@@ -2,7 +2,7 @@
   
   > .content {
     opacity: 1 !important;
-    max-height: 500px !important;
+    max-height: unset !important;
   }
 
   .collapsible aside {
@@ -181,22 +181,6 @@
 
       input {
         width: 6em;
-      }
-    }
-
-    .additional-data {
-      display: block;
-
-      p {
-        margin: 0;
-        margin-left: 0.5em
-      }
-
-      textarea {
-        width: calc(100% - 0.5em);
-        font-size: 12px;
-        resize: none;
-        outline: none;
       }
     }
 

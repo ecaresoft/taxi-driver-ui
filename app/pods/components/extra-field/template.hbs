@@ -1,0 +1,15 @@
+{{#if this.containsElements}}
+  <label local-class="extra-field-label">{{this.objectLabel}}</label>
+  <div local-class="extra-field-container">
+    {{#each this.elementsToArray as |innerField|}}
+      <ExtraField @field={{innerField}} @editMode={{this.editMode}} />
+    {{/each}}
+  </div>
+
+{{else}}
+  <div local-class="input-field">
+    <span>{{this.key}}</span>
+    <input type="text" value="{{this.value}}" spellcheck="false">
+  </div>
+
+{{/if}}

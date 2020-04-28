@@ -26,3 +26,29 @@
   margin-bottom: 0.25em;
   display: inline-block;
 }
+
+.new-field {
+  display: flex;
+}
+
+.new-field button {
+  flex-grow: 0.5;
+  line-height: 1.5em;
+  font-weight: bold;
+  border-radius: 4px;
+  color: var(--text-color-lighter);
+  background-color: transparent;
+  border: 1px solid darkgray;
+}
+
+.new-input-field-container {
+  flex-wrap: inherit;
+  border-radius: 4px;
+  padding: 2px;
+  margin: 2px;
+  background-color: var(--text-color-lighter);
+}
+
+.new-input-field-container input {
+  width: 40%;
+}

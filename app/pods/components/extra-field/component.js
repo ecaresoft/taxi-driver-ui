@@ -1,6 +1,10 @@
 import Component from "@glimmer/component";
+import { action } from "@ember/object";
+import { A } from '@ember/array';
+import { tracked } from '@glimmer/tracking';
 
 export default class ExtraFieldComponent extends Component {
+  @tracked newFields = A([]);
 
   get field() {
     return this.args.field;
@@ -50,5 +54,10 @@ export default class ExtraFieldComponent extends Component {
     }
 
     return [];
+  }
+
+  @action
+  insertNewField() {
+    this.newFields.unshiftObject({ '': '' });
   }
 }

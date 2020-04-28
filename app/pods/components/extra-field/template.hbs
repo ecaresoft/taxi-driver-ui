@@ -1,6 +1,19 @@
 {{#if this.containsElements}}
   <label local-class="extra-field-label">{{this.objectLabel}}</label>
   <div local-class="extra-field-container">
+    {{#if this.editMode}}
+      <div local-class="new-field">
+        <button type="button" {{on "click" (fn this.insertNewField)}}>+ New field</button>
+      </div>
+    {{/if}}
+
+    {{#each this.newFields as |newField|}}
+      <div local-class="input-field new-input-field-container">
+        <input type="text" placeholder="key name" value={{newField.key}} spellcheck="false">
+        <input type="text" placeholder="value" value={{newField.value}} spellcheck="false">
+      </div>
+    {{/each}}
+
     {{#each this.elementsToArray as |innerField|}}
       <ExtraField @field={{innerField}} @editMode={{this.editMode}} />
     {{/each}}

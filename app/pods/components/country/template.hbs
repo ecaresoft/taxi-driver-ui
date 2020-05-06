@@ -1,8 +1,8 @@
 <div class="country-component" local-class="country-component">
   <div local-class="country-label">
-    <p>{{@countryName}}</p>
+    <p>{{@rulesGroup.countryName}}</p>
   </div>
-  <Tax @taxName="0%" />
-  <Tax @taxName="16%" />
-  <Tax @taxName="Border" />
+  {{#each @rulesGroup.rules as |taxRule|}}
+    <Tax @rule={{taxRule}} @countries={{@countries}} @saveTaxEditions={{@saveTaxEditions}} />
+  {{/each}}
 </div>

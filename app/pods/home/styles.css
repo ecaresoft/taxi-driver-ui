@@ -10,6 +10,8 @@ body {
 
   > :global(.country-component) {
     margin: 1em;
+    flex-basis: 100%;
+    max-width: 400px;
   }
 }
 

@@ -6,6 +6,17 @@ export default class HomeController extends Controller {
   @tracked shouldDisplayNewTax = false;
   @tracked shouldDisplayHistoryModal = false;
 
+  get rulesGroupedByCountries() {
+    let countryRules = {};
+
+    this.model.countries.forEach(c =>
+      countryRules[c.code] = { "countryName": c.name, "rules": [] });
+    this.model.rules.forEach(r =>
+      countryRules[r.country].rules.push(r.toJSON()));
+
+    return Object.values(countryRules);
+  }
+
   @action
   displayNewTaxModal() {
     this.shouldDisplayNewTax = true;
@@ -18,8 +29,13 @@ export default class HomeController extends Controller {
   }
 
   @action
-  saveNewTax() {
-    // Save New Tax Logic
+  saveNewTax(updatedTax) {
+    console.log(JSON.stringify(updatedTax));
+  }
+
+  @action
+  saveTaxEditions(updatedTax) {
+    console.log(JSON.stringify(updatedTax));
   }
 
   @action

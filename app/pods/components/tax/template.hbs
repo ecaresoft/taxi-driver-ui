@@ -2,20 +2,23 @@
 
   {{#if this.shouldDisplayCollapsibleButton}}
     <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
-      <div><strong>Tax Name: </strong>{{this.taxName}} </div>
+      <div><strong>Tax Name: </strong>{{@rule.taxName}} </div>
       <aside class="expand-img" />
     </button>
   {{/if}}
 
+
   <div local-class="content {{if this.shouldContainHardInput "hard-input"}}" class="content">
 
-    {{#if this.shouldDisplayCountryField}}
+    <p local-class="id-label">{{this.draftRule._id}}</p>
+
+    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field country-input">
         <label>Country: </label>
-        <select>
-          {{#each this.countryOptions as |countryOption|}}
-            <option value="{{countryOption.value}}">
-              {{countryOption.optText}}
+        <select {{on 'change' this.setSelectedCountry}}>
+          {{#each this.countries as |country|}}
+            <option value="{{country.code}}" selected={{eq country.code this.selectedCountry}}>
+              {{country.name}}
             </option>
           {{/each}}
         </select>
@@ -25,91 +28,253 @@
     {{#if this.shouldDisplayInputs}}
       <div local-class="input-field name-input">
         <label>Tax Name: </label>
-        <input type="text" value="{{this.taxName}}" spellcheck="false">
+        <Input @type="text" @value={{this.draftRule.taxName}} @spellcheck="false" />
       </div>
     {{/if}}
 
     <div local-class="input-field date-input">
       <label>Valid from: </label>
-      <EmberFlatpickr local-class="date-picker" @value={{this.validFrom}} @onChange={{null}}
-        @placeholder="Select Date" />
+      <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidFrom}} @dateFormat="Z"
+        @onChange={{fn (mut this.selectedValidFrom)}} @placeholder="Select Date" />
       <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
     </div>
 
     <div local-class="input-field date-input">
       <label>Valid until: </label>
-      <EmberFlatpickr local-class="date-picker" @value={{this.validUntil}} @onChange={{null}}
-        @placeholder="Select Date" />
+      <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidUntil}} @dateFormat="Z"
+        @onChange={{fn (mut this.selectedValidUntil)}} @placeholder="Select Date" />
       <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
     </div>
 
     {{#if this.shouldDisplayInputs}}
       <div local-class="input-field product-category-input">
         <label>Product category:</label>
-        <input type="text" value="{{this.productCategory}}" spellcheck="false">
+        <Input @type="text" @value={{this.draftRule.category}} @spellcheck="false" />
       </div>
-    {{else}}
+    {{else if @rule.category}}
       <div local-class="input-field product-category-input">
         <label>Product category:</label>
-        <span>{{this.productCategory}}</span>
+        <span>{{@rule.category}}</span>
       </div>
     {{/if}}
 
-    <div local-class="input-field bp-input options-input">
-      <label>Business Partner VAT:</label>
-      <select>
-        {{#each this.bpVATOptions as |vatOption|}}
-          {{#if (eq vatOption.value this.bpVATSelected)}}
-            <option value="{{vatOption.value}}" selected>
-              {{vatOption.optText}}
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field country-input">
+        <label>Business Partner VAT: </label>
+        <select {{on 'change' this.setSelectedBPVAT}}>
+          {{#each this.BPVATOptions as |bpVAT|}}
+            <option value="{{bpVAT.value}}" selected={{eq bpVAT.value this.selectedBPVAT}}>
+              {{bpVAT.text}}
             </option>
-          {{else}}
-            <option value="{{vatOption.value}}">
-              {{vatOption.optText}}
-            </option>
-          {{/if}}
-        {{/each}}
-      </select>
-    </div>
+          {{/each}}
+        </select>
+      </div>
+    {{else if @rule.bpVAT}}
+      <div local-class="input-field country-input">
+        <label>Business Partner VAT: </label>
+        <span>{{@rule.bpVAT}}</span>
+      </div>
+    {{/if}}
 
-    <div local-class="input-field witholding-tax options-input">
-      <label>Witholding TAX:</label>
-      <select>
-        {{#each this.witholdingTAXOptions as |taxOption|}}
-          {{#if (eq taxOption.value this.witholdingTAXSelected)}}
-            <option value="{{taxOption.value}}" selected>
-              {{taxOption.optText}}
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field country-input">
+        <label>Organization VAT: </label>
+        <select {{on 'change' this.setSelectedORGVAT}}>
+          {{#each this.ORGVATOptions as |orgVAT|}}
+            <option value="{{orgVAT.value}}" selected={{eq orgVAT.value this.selectedORGVAT}}>
+              {{orgVAT.text}}
             </option>
-          {{else}}
-            <option value="{{taxOption.value}}">
-              {{taxOption.optText}}
-            </option>
-          {{/if}}
-        {{/each}}
-      </select>
-    </div>
+          {{/each}}
+        </select>
+      </div>
+    {{else if @rule.orgVAT}}
+      <div local-class="input-field country-input">
+        <label>Organization VAT: </label>
+        <span>{{@rule.orgVAT}}</span>
+      </div>
+    {{/if}}
 
-    <div local-class="input-field tax-type">
-      <label>TAX Type:</label>
-      <input type="checkbox" /><span>Income</span>
-      <input type="checkbox" /><span>Expense</span>
-    </div>
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field country-input">
+        <label>Business Partner Type: </label>
+        <select {{on 'change' this.setSelectedBPType}}>
+          {{#each this.BPTypeOptions as |bpType|}}
+            <option value="{{bpType.value}}" selected={{eq bpType.value this.selectedBPType}}>
+              {{bpType.text}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    {{else if @rule.bpType}}
+      <div local-class="input-field country-input">
+        <label>Business Partner Type: </label>
+        <span>{{@rule.bpType}}</span>
+      </div>
+    {{/if}}
+
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field">
+        <label>DocType: </label>
+        <Input @type="text" @value={{this.draftRule.docType}} />
+      </div>
+    {{else if @rule.docType}}
+      <div local-class="input-field">
+        <label>DocType: </label>
+        <span>{{@rule.docType}}</span>
+      </div>
+    {{/if}}
+
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field">
+        <label for="witholdingTax">Witholding TAX:</label>
+        <Input @type="checkbox" @checked={{this.draftRule.whitholded}} disabled />
+      </div>
+    {{else if this.shouldDisplayWitholded}}
+      <div local-class="input-field">
+        <label for="witholdingTax">Witholding TAX:</label>
+        <Input @type="checkbox" @checked={{this.draftRule.whitholded}} />
+      </div>
+    {{/if}}
+
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field tax-type">
+        <label>TAX Type:</label>
+        <Input @type="checkbox" @checked={{this.isIncomeType}} />
+        <span>Income</span>
+        <Input @type="checkbox" @checked={{this.isExpenseType}} />
+        <span>Expense</span>
+      </div>
+    {{else if @rule.txType}}
+      <div local-class="input-field tax-type">
+        <label>TAX Type:</label>
+        <Input @type="checkbox" @checked={{this.isIncomeType}} disabled />
+        <span>Income</span>
+        <Input @type="checkbox" @checked={{this.isExpenseType}} disabled />
+        <span>Expense</span>
+      </div>
+    {{/if}}
 
     {{#if this.shouldDisplayInputs}}
       <div local-class="input-field tax-rate">
         <label>TAX Rate:</label>
-        <input type="number" spellcheck="false">%
+        <Input @type="text" @value={{this.draftRule.rate}} @spellcheck="false" />
       </div>
-    {{else}}
+    {{else if @rule.rate}}
       <div local-class="input-field tax-rate">
         <label>TAX Rate:</label>
-        <span>{{this.taxRate}}%</span>
+        <span>{{@rule.rate}}</span>
       </div>
     {{/if}}
 
-    {{#if this.extraFields}}
-      <ExtraField @field={{this.extraFields}} @editMode={{this.editMode}} />
+    {{#if this.shouldDisplayInputs}}
+      <div local-class="input-field">
+        <label>Amount: </label>
+        <Input @type="text" @value={{this.draftRule.amount}} />
+      </div>
+    {{else if @rule.amount}}
+      <div local-class="input-field">
+        <label>Amount: </label>
+        <span>{{@rule.amount}}</span>
+      </div>
     {{/if}}
+
+    {{#if this.shouldDisplayMeta}}
+      <label local-class="composed-fields-label">Meta</label>
+    {{/if}}
+
+    <div local-class="composed-fields-container">
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>Exempt: </label>
+          <Input @type="checkbox" @checked={{this.draftMeta.exempt}} />
+        </div>
+      {{else if @rule.meta.exempt}}
+        <div local-class="input-field">
+          <label>Exempt: </label>
+          <Input @type="checkbox" @checked={{@rule.meta.exempt}} disabled />
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>Description: </label>
+          <Input @type="text" @value={{this.draftMeta.description}} />
+        </div>
+      {{else if @rule.meta.description}}
+        <div local-class="input-field">
+          <label>Description: </label>
+          <span>{{@rule.meta.description}}</span>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>unspscCode: </label>
+          <Input @type="text" @value={{this.draftMeta.unspscCode}} />
+        </div>
+      {{else if @rule.meta.unspscCode}}
+        <div local-class="input-field">
+          <label>unspscCode: </label>
+          <span>{{@rule.meta.unspscCode}}</span>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>unspscCodeDescription: </label>
+          <Input @type="text" @value={{this.draftMeta.unspscCodeDescription}} />
+        </div>
+      {{else if @rule.meta.unspscCodeDescription}}
+        <div local-class="input-field">
+          <label>unspscCodeDescription: </label>
+          <span>{{@rule.meta.unspscCodeDescription}}</span>
+        </div>
+      {{/if}}
+
+    </div>
+
+    {{#if this.shouldDisplayVars}}
+      <label local-class="composed-fields-label">Vars</label>
+    {{/if}}
+
+    <div local-class="composed-fields-container">
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>Escala: </label>
+          <Input @type="text" @value={{this.draftVars.escala}} />
+        </div>
+      {{else if @rule.vars.escala}}
+        <div local-class="input-field">
+          <label>Escala: </label>
+          <span>{{@rule.vars.escala}}</span>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>Ret All: </label>
+          <Input @type="text" @value={{this.draftVars.retAll}} />
+        </div>
+      {{else if @rule.vars.retAll}}
+        <div local-class="input-field">
+          <label>Ret All: </label>
+          <span>{{@rule.vars.retAll}}</span>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayInputs}}
+        <div local-class="input-field">
+          <label>Taxable: </label>
+          <Input @type="text" @value={{this.draftVars.taxable}} />
+        </div>
+      {{else if @rule.vars.taxable}}
+        <div local-class="input-field">
+          <label>Taxable: </label>
+          <span>{{@rule.vars.taxable}}</span>
+        </div>
+      {{/if}}
+
+    </div>
 
     {{#if this.newTaxMode}}
       <div local-class="edit-buttons">

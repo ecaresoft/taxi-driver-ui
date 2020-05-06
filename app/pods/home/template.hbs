@@ -8,9 +8,10 @@
 </div>
 
 <div local-class="countries-container">
-  <Country @countryName="Mexico" />
-  <Country @countryName="Argentina" />
-  <Country @countryName="Kingdom of Saudi Arabia" />
+  {{#each this.rulesGroupedByCountries as |rulesGroup|}}
+    <Country @rulesGroup={{rulesGroup}} @countries={{@model.countries}} @saveNewTax={{this.saveNewTax}}
+      @saveTaxEditions={{this.saveTaxEditions}} />
+  {{/each}}
 </div>
 
 <button local-class="new-tax" type="button" {{on "click" (fn this.displayNewTaxModal)}}>
@@ -21,7 +22,7 @@
 
 {{#if this.shouldDisplayNewTax}}
   <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeHomeModals}}>
-    <Tax @newTaxMode="true" @saveNewTax={{this.saveNewTax}} @closeNewTaxModal={{this.closeHomeModals}} />
+    <Tax @newTaxMode="true" @countries={{@model.countries}} @saveNewTax={{this.saveNewTax}} />
   </ModalDialog>
 {{/if}}
 

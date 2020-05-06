@@ -7,16 +7,25 @@
     </button>
   {{/if}}
 
+
   <div local-class="content {{if this.shouldContainHardInput "hard-input"}}" class="content">
+
+    <p local-class="id-label">{{@rule._id}}</p>
 
     {{#if this.shouldDisplayCountryField}}
       <div local-class="input-field country-input">
         <label>Country: </label>
         <select>
-          {{#each this.countryOptions as |countryOption|}}
-            <option value="{{countryOption.value}}">
-              {{countryOption.optText}}
-            </option>
+          {{#each this.countriesList as |country|}}
+            {{#if (eq country.code this.selectedCountry)}}
+              <option value="{{country.code}}" selected>
+                {{country.name}}
+              </option>
+            {{else}}
+              <option value="{{country.code}}">
+                {{country.name}}
+              </option>
+            {{/if}}
           {{/each}}
         </select>
       </div>
@@ -48,7 +57,7 @@
         <label>Product category:</label>
         <input type="text" value="{{this.productCategory}}" spellcheck="false">
       </div>
-    {{else}}
+    {{else if this.productCategory}}
       <div local-class="input-field product-category-input">
         <label>Product category:</label>
         <span>{{this.productCategory}}</span>
@@ -72,27 +81,33 @@
       </select>
     </div>
 
-    <div local-class="input-field witholding-tax options-input">
+    <div local-class="input-field">
       <label>Witholding TAX:</label>
-      <select>
-        {{#each this.witholdingTAXOptions as |taxOption|}}
-          {{#if (eq taxOption.value this.witholdingTAXSelected)}}
-            <option value="{{taxOption.value}}" selected>
-              {{taxOption.optText}}
-            </option>
-          {{else}}
-            <option value="{{taxOption.value}}">
-              {{taxOption.optText}}
-            </option>
-          {{/if}}
-        {{/each}}
-      </select>
+
+      {{#if this.whitholded}}
+        <input type="checkbox" checked />
+      {{else}}
+        <input type="checkbox" />
+      {{/if}}
     </div>
 
     <div local-class="input-field tax-type">
       <label>TAX Type:</label>
-      <input type="checkbox" /><span>Income</span>
-      <input type="checkbox" /><span>Expense</span>
+
+      {{#if this.TAXTypeIncomeCheck}}
+        <input type="checkbox" checked />
+      {{else}}
+        <input type="checkbox" />
+      {{/if}}
+      <span>Income</span>
+
+      {{#if this.TAXTypeExpenseCheck}}
+        <input type="checkbox" checked />
+      {{else}}
+        <input type="checkbox" />
+      {{/if}}
+      <span>Expense</span>
+
     </div>
 
     {{#if this.shouldDisplayInputs}}
@@ -103,7 +118,7 @@
     {{else}}
       <div local-class="input-field tax-rate">
         <label>TAX Rate:</label>
-        <span>{{this.taxRate}}%</span>
+        <span>{{this.taxRate}}</span>
       </div>
     {{/if}}
 

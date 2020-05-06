@@ -7,55 +7,52 @@ export default class TaxComponent extends Component {
   @tracked editMode = false;
   @tracked newTaxMode = this.args.newTaxMode;
 
-  @tracked countrySelected = 'mx';
-  @tracked countryOptions = [
-    { optText: 'Mexico', value: 'mx' },
-    { optText: 'United States of America', value: 'us' },
-    { optText: 'Serbia', value: 'sb' },
-    { optText: 'Colombia', value: 'co' }
-  ];
-  @tracked taxName = this.args.taxName;
-  @tracked validFrom = new Date(2000, 0);
-  @tracked validUntil = new Date(2015, 0);
-  @tracked productCategory = "Lorem ipsum";
+  get rule() {
+    return this.args.rule;
+  }
+
+  get countriesList() {
+    return this.args.countries;
+  }
+
+  @tracked taxName = this.rule.taxName;
+  @tracked selectedCountry = this.rule.country;
+  @tracked validFrom = this.rule.validFrom;
+  @tracked validUntil = this.rule.validUntil;
+  @tracked productCategory = this.rule.category;
   @tracked bpVATSelected = 'optionB';
   @tracked bpVATOptions = [
     { optText: 'None', value: 'none' },
     { optText: 'Option B', value: 'optionB' },
     { optText: 'Option C', value: 'optionC' }
   ];
-  @tracked witholdingTAXSelected = 'optionC';
-  @tracked witholdingTAXOptions = [
-    { optText: 'None', value: 'none' },
-    { optText: 'Option B', value: 'optionB' },
-    { optText: 'Option C', value: 'optionC' },
-    { optText: 'Option D', value: 'optionD' }
-  ];
-  @tracked TAXTypeIncomeCheck = false;
-  @tracked TAXTypeExpenseCheck = false;
-  @tracked taxRate = 0;
-  @tracked additionalData = "Only applicable to certain processes and dataframes";
+  @tracked whitholded = this.rule.whitholded;
+  @tracked TAXTypeIncomeCheck = this.rule.txType === "income";
+  @tracked TAXTypeExpenseCheck = this.rule.txType === "expense";
+  @tracked taxRate = this.rule.rate;
 
+  /* Information regarding the component behaviour */
   @tracked shouldDisplayOpenCard = this.newTaxMode;
   @tracked shouldDisplayMorePanel = false;
   @tracked shouldDisplaySaveModal = false;
   @tracked shouldDisplayConfirmationModal = false;
 
   get extraFields() {
-    return {
-      vars: {
-        escala: 'IF(AND(subTotal>0,subTotal<=5000), 0.05, 0.10',
-        retAll: 'IF(subTotal > 10700, escala, 0.06)',
-        taxable: 'subTotal * retAll',
-        extraVars: {
-          superRet: 'IF(subTotal > 10700, escala, 0.06)',
-          extraTaxable: 'subTotal * retAll'
-        },
-        anotherVar: 'Otra variable'
-      },
-      rate: 'retAll',
-      amount: 'IF(taxable <= 150, 150, taxable)'
-    };
+    const displayedFields = ["_id", "country", "taxName", "validFrom", "validUntil",
+      "category", "whitholded", "txType", "rate"];
+    const extraFields = {};
+
+    Object.keys(this.rule).forEach(key => {
+      if (!displayedFields.includes(key)) {
+        extraFields[key] = this.rule[key];
+      }
+    });
+
+    if (!Object.keys(extraFields).length) {
+      return false;
+    }
+
+    return extraFields;
   }
 
   get shouldDisplayCollapsibleButton() {

@@ -6,6 +6,18 @@ export default class HomeController extends Controller {
   @tracked shouldDisplayNewTax = false;
   @tracked shouldDisplayHistoryModal = false;
 
+  get rulesGroupedByCountries() {
+    let countryRules = {};
+
+    const rules = this.model.rules;
+    const countries = this.model.countries;
+
+    countries.forEach(c => countryRules[c.code] = { "countryName": c.name, "rules": [] });
+    rules.forEach(r => countryRules[r.country].rules.push(r));
+
+    return Object.values(countryRules);
+  }
+
   @action
   displayNewTaxModal() {
     this.shouldDisplayNewTax = true;

@@ -18,6 +18,9 @@
   margin-bottom: 1em;
   padding-left: 0.5em;
   border-left: 2px solid darkgray;
+  
+  /* Placed to avoid non implemented editing. To be removed */
+  pointer-events: none;
 }
 
 .extra-field-label {

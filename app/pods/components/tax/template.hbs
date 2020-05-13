@@ -2,7 +2,7 @@
 
   {{#if this.shouldDisplayCollapsibleButton}}
     <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
-      <div><strong>Tax Name: </strong>{{this.taxName}} </div>
+      <div><strong>Tax Name: </strong>{{this.draftRule.taxName}} </div>
       <aside class="expand-img" />
     </button>
   {{/if}}
@@ -10,13 +10,13 @@
 
   <div local-class="content {{if this.shouldContainHardInput "hard-input"}}" class="content">
 
-    <p local-class="id-label">{{@rule._id}}</p>
+    <p local-class="id-label">{{this.draftRule._id}}</p>
 
     {{#if this.shouldDisplayCountryField}}
       <div local-class="input-field country-input">
         <label>Country: </label>
-        <select>
-          {{#each this.countriesList as |country|}}
+        <select onchange={{action 'setSelectedCountry' value="target.value"}}>
+          {{#each this.countries as |country|}}
             {{#if (eq country.code this.selectedCountry)}}
               <option value="{{country.code}}" selected>
                 {{country.name}}
@@ -34,20 +34,20 @@
     {{#if this.shouldDisplayInputs}}
       <div local-class="input-field name-input">
         <label>Tax Name: </label>
-        <input type="text" value="{{this.taxName}}" spellcheck="false">
+        <Input @type="text" @value={{this.draftRule.taxName}} @spellcheck="false" />
       </div>
     {{/if}}
 
     <div local-class="input-field date-input">
       <label>Valid from: </label>
-      <EmberFlatpickr local-class="date-picker" @value={{this.validFrom}} @onChange={{null}}
+      <EmberFlatpickr local-class="date-picker" @value={{this.draftRule.validFrom}} @dateFormat="Z" @onChange={{null}}
         @placeholder="Select Date" />
       <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
     </div>
 
     <div local-class="input-field date-input">
       <label>Valid until: </label>
-      <EmberFlatpickr local-class="date-picker" @value={{this.validUntil}} @onChange={{null}}
+      <EmberFlatpickr local-class="date-picker" @value={{this.draftRule.validUntil}} @dateFormat="Z" @onChange={{null}}
         @placeholder="Select Date" />
       <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
     </div>
@@ -55,57 +55,27 @@
     {{#if this.shouldDisplayInputs}}
       <div local-class="input-field product-category-input">
         <label>Product category:</label>
-        <input type="text" value="{{this.productCategory}}" spellcheck="false">
+        <Input @type="text" @value={{this.draftRule.category}} @spellcheck="false" />
       </div>
-    {{else if this.productCategory}}
+    {{else if this.draftRule.category}}
       <div local-class="input-field product-category-input">
         <label>Product category:</label>
-        <span>{{this.productCategory}}</span>
+        <span>{{this.draftRule.category}}</span>
       </div>
     {{/if}}
 
-    <div local-class="input-field bp-input options-input">
-      <label>Business Partner VAT:</label>
-      <select>
-        {{#each this.bpVATOptions as |vatOption|}}
-          {{#if (eq vatOption.value this.bpVATSelected)}}
-            <option value="{{vatOption.value}}" selected>
-              {{vatOption.optText}}
-            </option>
-          {{else}}
-            <option value="{{vatOption.value}}">
-              {{vatOption.optText}}
-            </option>
-          {{/if}}
-        {{/each}}
-      </select>
-    </div>
-
     <div local-class="input-field">
-      <label>Witholding TAX:</label>
-
-      {{#if this.whitholded}}
-        <input type="checkbox" checked />
-      {{else}}
-        <input type="checkbox" />
-      {{/if}}
+      <label for="witholdingTax">Witholding TAX:</label>
+      <Input @type="checkbox" @checked={{this.draftRule.whitholded}} />
     </div>
 
     <div local-class="input-field tax-type">
       <label>TAX Type:</label>
 
-      {{#if this.TAXTypeIncomeCheck}}
-        <input type="checkbox" checked />
-      {{else}}
-        <input type="checkbox" />
-      {{/if}}
+      <Input @type="checkbox" @checked={{this.isIncomeType}} />
       <span>Income</span>
 
-      {{#if this.TAXTypeExpenseCheck}}
-        <input type="checkbox" checked />
-      {{else}}
-        <input type="checkbox" />
-      {{/if}}
+      <Input @type="checkbox" @checked={{this.isExpenseType}} />
       <span>Expense</span>
 
     </div>
@@ -113,17 +83,17 @@
     {{#if this.shouldDisplayInputs}}
       <div local-class="input-field tax-rate">
         <label>TAX Rate:</label>
-        <input type="number" spellcheck="false">%
+        <Input @type="text" @value={{this.draftRule.rate}} @spellcheck="false" />%
       </div>
     {{else}}
       <div local-class="input-field tax-rate">
         <label>TAX Rate:</label>
-        <span>{{this.taxRate}}</span>
+        <span>{{this.draftRule.rate}}</span>
       </div>
     {{/if}}
 
     {{#if this.extraFields}}
-      <ExtraField @field={{this.extraFields}} @editMode={{this.editMode}} />
+      <ExtraField @field={{this.extraFields}} @editMode={{this.editMode}} @updateExtras={{this.updateExtras}} />
     {{/if}}
 
     {{#if this.newTaxMode}}

@@ -4,32 +4,38 @@ import { tracked } from '@glimmer/tracking';
 
 
 export default class TaxComponent extends Component {
+  constructor() {
+    super(...arguments);
+    this.draftRuleSetup();
+  }
+
   @tracked editMode = false;
   @tracked newTaxMode = this.args.newTaxMode;
+
+  @tracked selectedCountry;
+
+  displayedFields = ["_id", "country", "taxName", "validFrom", "validUntil",
+    "category", "whitholded", "txType", "rate"];
 
   get rule() {
     return this.args.rule;
   }
 
-  get countriesList() {
+  get countries() {
     return this.args.countries;
   }
 
-  @tracked taxName = this.rule.taxName;
-  @tracked selectedCountry = this.rule.country;
-  @tracked validFrom = this.rule.validFrom;
-  @tracked validUntil = this.rule.validUntil;
-  @tracked productCategory = this.rule.category;
-  @tracked bpVATSelected = 'optionB';
+  @tracked draftRule;
+
+  @tracked isIncomeType;
+  @tracked isExpenseType;
+
+  @tracked bpVATSelected;
   @tracked bpVATOptions = [
     { optText: 'None', value: 'none' },
     { optText: 'Option B', value: 'optionB' },
     { optText: 'Option C', value: 'optionC' }
   ];
-  @tracked whitholded = this.rule.whitholded;
-  @tracked TAXTypeIncomeCheck = this.rule.txType === "income";
-  @tracked TAXTypeExpenseCheck = this.rule.txType === "expense";
-  @tracked taxRate = this.rule.rate;
 
   /* Information regarding the component behaviour */
   @tracked shouldDisplayOpenCard = this.newTaxMode;
@@ -38,13 +44,11 @@ export default class TaxComponent extends Component {
   @tracked shouldDisplayConfirmationModal = false;
 
   get extraFields() {
-    const displayedFields = ["_id", "country", "taxName", "validFrom", "validUntil",
-      "category", "whitholded", "txType", "rate"];
     const extraFields = {};
 
-    Object.keys(this.rule).forEach(key => {
-      if (!displayedFields.includes(key)) {
-        extraFields[key] = this.rule[key];
+    Object.keys(this.draftRule).forEach(key => {
+      if (!this.displayedFields.includes(key)) {
+        extraFields[key] = this.draftRule[key];
       }
     });
 
@@ -75,6 +79,23 @@ export default class TaxComponent extends Component {
   }
 
   @action
+  draftRuleSetup() {
+    if (this.args.rule) {
+      this.draftRule = this.args.rule;
+
+      this.selectedCountry = this.draftRule.country;
+      this.isIncomeType = this.draftRule.txType === "income";
+      this.isExpenseType = this.draftRule.txType === "expense";
+    } else {
+      this.draftRule = {};
+    }
+  }
+
+  @action setSelectedCountry(value) {
+    this.selectedCountry = value;
+  }
+
+  @action
   toggleOpenCard() {
     this.shouldDisplayOpenCard = !this.shouldDisplayOpenCard;
   }
@@ -96,16 +117,14 @@ export default class TaxComponent extends Component {
   }
 
   @action
-  openSaveModal() {
-    // Save TAX Editions logic
-    this.shouldDisplaySaveModal = true;
+  updateExtras(key, value) {
+    this.draftRule[key] = value;
   }
 
   @action
-  saveTaxEditions() {
-    // Save tax editions logic
-    this.shouldDisplaySaveModal = false;
-    this.shouldDisplayConfirmationModal = true;
+  openSaveModal() {
+    // Save TAX Editions logic
+    this.shouldDisplaySaveModal = true;
   }
 
   @action
@@ -131,7 +150,17 @@ export default class TaxComponent extends Component {
   /* Home controller */
   @action
   saveNewTax() {
-    this.args.saveNewTax();
+    this.args.saveNewTax(this.draftRule);
+    this.shouldDisplaySaveModal = false;
+    this.shouldDisplayConfirmationModal = true;
+  }
+
+  @action
+  saveTaxEditions() {
+    this.draftRule.country = this.selectedCountry;
+
+
+    this.args.saveTaxEditions(this.draftRule);
     this.shouldDisplaySaveModal = false;
     this.shouldDisplayConfirmationModal = true;
   }

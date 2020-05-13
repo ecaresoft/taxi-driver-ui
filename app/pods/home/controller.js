@@ -3,17 +3,21 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class HomeController extends Controller {
+  @tracked rules;
+  @tracked countries;
+
   @tracked shouldDisplayNewTax = false;
   @tracked shouldDisplayHistoryModal = false;
 
   get rulesGroupedByCountries() {
     let countryRules = {};
 
-    const rules = this.model.rules;
-    const countries = this.model.countries;
+    this.rules = this.model.rules;
+    this.countries = this.model.countries;
 
-    countries.forEach(c => countryRules[c.code] = { "countryName": c.name, "rules": [] });
-    rules.forEach(r => countryRules[r.country].rules.push(r));
+    this.countries.forEach(c =>
+      countryRules[c.code] = { "countryName": c.name, "rules": [] });
+    this.rules.forEach(r => countryRules[r.country].rules.push(r));
 
     return Object.values(countryRules);
   }
@@ -30,8 +34,13 @@ export default class HomeController extends Controller {
   }
 
   @action
-  saveNewTax() {
-    // Save New Tax Logic
+  saveNewTax(updatedTax) {
+    console.log(JSON.stringify(updatedTax));
+  }
+
+  @action
+  saveTaxEditions(updatedTax) {
+    console.log(JSON.stringify(updatedTax));
   }
 
   @action

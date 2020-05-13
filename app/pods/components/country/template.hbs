@@ -3,6 +3,7 @@
     <p>{{@rulesGroup.countryName}}</p>
   </div>
   {{#each @rulesGroup.rules as |taxRule|}}
-    <Tax @rule={{taxRule}} @countries={{@countries}} />
+    <Tax @rule={{taxRule}} @countries={{@countries}} @saveNewTax={{@saveNewTax}}
+      @saveTaxEditions={{@saveTaxEditions}} />
   {{/each}}
 </div>

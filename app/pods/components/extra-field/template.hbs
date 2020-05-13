@@ -9,8 +9,8 @@
 
     {{#each this.newFields as |newField|}}
       <div local-class="input-field new-input-field-container">
-        <input type="text" placeholder="key name" value={{newField.key}} spellcheck="false">
-        <input type="text" placeholder="value" value={{newField.value}} spellcheck="false">
+        <Input @type="text" @placeholder="key name" @value={{newField.key}} @spellcheck="false" />
+        <Input @type="text" @placeholder="value" @value={{newField.value}} @spellcheck="false" />
       </div>
     {{/each}}
 
@@ -21,8 +21,8 @@
 
 {{else}}
   <div local-class="input-field">
-    <span>{{this.key}}</span>
-    <input type="text" value="{{this.value}}" spellcheck="false">
+    <span>{{this.fieldKey}}</span>
+    <Input @type="text" @value={{this.fieldValue}} {{on "keyup" this.updateExtras}} />
   </div>
 
 {{/if}}

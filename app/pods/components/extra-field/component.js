@@ -4,7 +4,16 @@ import { A } from '@ember/array';
 import { tracked } from '@glimmer/tracking';
 
 export default class ExtraFieldComponent extends Component {
+  constructor() {
+    super(...arguments);
+
+    this.fieldKey = this.args.field[0];
+    this.fieldValue = this.args.field[1];
+  }
+
   @tracked newFields = A([]);
+  @tracked fieldKey;
+  @tracked fieldValue;
 
   get field() {
     return this.args.field;
@@ -13,18 +22,11 @@ export default class ExtraFieldComponent extends Component {
     return this.args.editMode;
   }
 
-  get key() {
-    return this.field[0];
-  }
-  get value() {
-    return this.field[1];
-  }
-
   get isObject() {
     return this.field instanceof Object && !(this.field instanceof Array);
   }
   get valueIsObject() {
-    return this.value instanceof Object && !(this.value instanceof Array);
+    return this.fieldValue instanceof Object && !(this.fieldValue instanceof Array);
   }
   get containsElements() {
     return this.isObject || this.valueIsObject;
@@ -34,7 +36,7 @@ export default class ExtraFieldComponent extends Component {
     if (this.isObject) {
       return "Additional data";
     } else if (this.valueIsObject) {
-      return this.key;
+      return this.fieldKey;
     }
 
     return undefined;
@@ -50,7 +52,7 @@ export default class ExtraFieldComponent extends Component {
     if (this.isObject) {
       return Object.entries(this.field);
     } else if (this.valueIsObject) {
-      return Object.entries(this.value);
+      return Object.entries(this.fieldValue);
     }
 
     return [];
@@ -59,5 +61,11 @@ export default class ExtraFieldComponent extends Component {
   @action
   insertNewField() {
     this.newFields.unshiftObject({ '': '' });
+  }
+
+  @action
+  updateExtras() {
+    // To be implemented
+    // this.args.updateExtras(this.fieldKey, this.fieldValue);
   }
 }

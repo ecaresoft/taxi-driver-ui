@@ -29,13 +29,23 @@ export default class HomeController extends Controller {
   }
 
   @action
-  saveNewTax(updatedTax) {
-    console.log(JSON.stringify(updatedTax));
+  saveNewTax(newTax) {
+    const record = this.store.createRecord('rule', newTax);
+    record.save();
+
+    window.location.reload(true);
   }
 
   @action
   saveTaxEditions(updatedTax) {
-    console.log(JSON.stringify(updatedTax));
+    this.store.findRecord('rule', updatedTax._id).then(rule => {
+      Object.entries(updatedTax).forEach(([key, value]) => {
+        rule[key] = value;
+      });
+      rule.save();
+    });
+
+    window.location.reload(true);
   }
 
   @action

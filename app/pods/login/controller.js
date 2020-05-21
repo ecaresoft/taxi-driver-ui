@@ -1,11 +1,9 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    authenticate() {
-      /*
-       * Authentication Logic
-       */
-    }
+export default class LoginController extends Controller {
+  @action
+  authenticate() {
+    // Authentication logic
   }
-});
+}

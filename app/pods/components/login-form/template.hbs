@@ -1,12 +1,12 @@
 <div local-class="form-container">
   <img src="/assets/icons/tax_engine-48px.svg" alt="TaxEngine" local-class="img-tax-engine">
-  <form>
+  <form {{on "submit" this.authenticate}}>
     <label>User</label>
-    <input type="text" local-class="text-input">
+    <Input type="text" local-class="text-input" @value={{this.user}} />
     <label>Password:</label>
-    <input type="password" local-class="text-input">
+    <Input type="password" local-class="text-input" @value={{this.password}} />
     <div local-class="checkbox-container">
-      <input type="checkbox">
+      <Input @type="checkbox" @checked={{this.rememberMe}} />
       <span local-class="darkgray">Rember me</span>
     </div>
     <input type="submit" value="Login" local-class="login-submit">

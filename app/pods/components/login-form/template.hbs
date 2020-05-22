@@ -9,7 +9,9 @@
       <Input @type="checkbox" @checked={{this.rememberMe}} />
       <span local-class="darkgray">Rember me</span>
     </div>
-    <input type="submit" value="Login" local-class="login-submit">
-    <p local-class="darkgray">Remember my password</p>
+    <input type="submit" value="Login" local-class="login-submit {{if this.tooManyTries "disabled"}}">
+    {{#if @errorMessage}}
+      <p local-class="error-message">{{@this.errorMessage}}</p>
+    {{/if}}
   </form>
 </div>

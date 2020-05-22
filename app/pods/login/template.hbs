@@ -4,7 +4,8 @@
   </div>
   <div local-class="login-form container">
     <div>
-      <LoginForm />
+      <LoginForm @authenticate={{this.authenticate}} @authTimes={{this.authTimes}}
+        @errorMessage={{this.errorMessage}} />
       <img src="/assets/logos/powered_by_ecs.svg" alt="powered by Ecaresoft">
     </div>
   </div>

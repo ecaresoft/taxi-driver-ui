@@ -6,9 +6,15 @@ export default class LoginFormComponent extends Component {
   @tracked user;
   @tracked password;
   @tracked rememberMe;
+  @tracked disabled = this.args.disabled;
+
+  get tooManyTries() {
+    return (this.args.authTimes >= 3);
+  }
 
   @action
-  authenticate() {
-    // Authenticate logic
+  authenticate(event) {
+    event.preventDefault();
+    this.args.authenticate(this.user, this.password, this.rememberMe);
   }
 }

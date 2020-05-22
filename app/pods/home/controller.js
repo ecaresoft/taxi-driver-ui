@@ -1,10 +1,17 @@
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class HomeController extends Controller {
+  @service session;
+
   @tracked shouldDisplayNewTax = false;
   @tracked shouldDisplayHistoryModal = false;
+
+  get userLogged() {
+    return this.session.data.authenticated.username;
+  }
 
   get rulesGroupedByCountries() {
     let countryRules = {};
@@ -51,5 +58,10 @@ export default class HomeController extends Controller {
   @action
   openHistoryModal() {
     this.shouldDisplayHistoryModal = true;
+  }
+
+  @action
+  invalidateSession() {
+    this.session.invalidate();
   }
 }

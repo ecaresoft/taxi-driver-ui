@@ -1,4 +1,4 @@
-<UserBar />
+<UserBar @username={{this.userLogged}} @invalidateSession={{this.invalidateSession}} />
 
 <div local-class="btn-history-container">
   <button type="button" {{on "click" (fn this.openHistoryModal)}}>

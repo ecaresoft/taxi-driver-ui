@@ -9,6 +9,6 @@ export default class LoginFormComponent extends Component {
 
   @action
   authenticate() {
-    // Authenticate logic
+    this.args.authenticate(this.user, this.password, this.rememberMe);
   }
 }

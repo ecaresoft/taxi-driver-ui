@@ -13,6 +13,10 @@ export default class HomeController extends Controller {
     return this.session.data.authenticated.username;
   }
 
+  get historyLogs() {
+    return this.model.logs.toArray().reverse();
+  }
+
   get rulesGroupedByCountries() {
     let countryRules = {};
 
@@ -37,6 +41,7 @@ export default class HomeController extends Controller {
 
   @action
   saveNewTax(newTax) {
+    newTax.lastUserUpdate = this.userLogged;
     const record = this.store.createRecord('rule', newTax);
     record.save();
 
@@ -45,6 +50,7 @@ export default class HomeController extends Controller {
 
   @action
   saveTaxEditions(updatedTax) {
+    updatedTax.lastUserUpdate = this.userLogged;
     this.store.findRecord('rule', updatedTax._id).then(rule => {
       Object.entries(updatedTax).forEach(([key, value]) => {
         rule[key] = value;

@@ -28,10 +28,6 @@
 
 {{#if this.shouldDisplayHistoryModal}}
   <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeHomeModals}}>
-    <div local-class="modal-history">
-      <button type="button" local-class="close-modal-icon" {{on "click" (fn this.closeHomeModals)}} />
-      <label>Editions history:</label>
-      <p>Tax logs</p>
-    </div>
+    <History @logs={{this.historyLogs}} @closeHomeModals={{this.closeHomeModals}} />
   </ModalDialog>
 {{/if}}

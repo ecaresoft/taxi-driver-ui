@@ -6,7 +6,8 @@ export default class RulesRoute extends Route.extend(AuthenticatedRouteMixin) {
   model() {
     return RSVP.hash({
       rules: this.store.findAll('rule'),
-      countries: this.store.findAll('country')
+      countries: this.store.findAll('country'),
+      logs: this.store.findAll('log')
     });
   }
 }

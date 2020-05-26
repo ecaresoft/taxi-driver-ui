@@ -1,0 +1,35 @@
+.modal-history {
+  width: 75vw;
+  height: 75vh;
+
+  label {
+    border-bottom: rgba(0,0,0,0.35) solid 2px;
+    margin-bottom: 2em;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  div.logs-container {
+    margin-top: 1em;
+  }
+
+  p.date {
+    font-size: 0.75em;
+    font-style: italic;
+    margin: 0;
+  }
+
+  p.message {
+    margin: 0.25em 0 1.5em 0.25em;
+  }
+
+  .close-modal-icon {
+    position: absolute;
+    right: 10px;
+    background-image: url('/assets/icons/clear-black-24px.svg');
+    background-color: transparent;
+    border: none;
+    height: 24px;
+    width: 24px;
+  }
+}

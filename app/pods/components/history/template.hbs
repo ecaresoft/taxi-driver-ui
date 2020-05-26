@@ -1,0 +1,10 @@
+<div local-class="modal-history">
+  <button type="button" local-class="close-modal-icon" {{on "click" (fn @closeHomeModals)}} />
+  <label>Editions history:</label>
+  <div local-class="logs-container">
+    {{#each @logs as |log|}}
+      <p local-class="date">{{log.date}}</p>
+      <p local-class="message">{{log.message}}</p>
+    {{/each}}
+  </div>
+</div>

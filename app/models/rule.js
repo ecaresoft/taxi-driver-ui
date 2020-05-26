@@ -1,6 +1,7 @@
 import Model, { attr } from '@ember-data/model';
 
 export default class RuleModel extends Model {
+  @attr('string') lastUserUpdate;
   @attr _id;
   @attr('string') country;
   @attr('string') taxName;

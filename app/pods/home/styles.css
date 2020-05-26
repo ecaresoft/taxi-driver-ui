@@ -68,25 +68,3 @@ body {
   width: fit-content;
   height: 2em;
 }
-
-.modal-history {
-  width: 75vw;
-  height: 75vh;
-
-  label {
-    border-bottom: rgba(0,0,0,0.35) solid 2px;
-    margin-bottom: 2em;
-    font-size: 2em;
-    font-weight: bold;
-  }
-
-  .close-modal-icon {
-    position: absolute;
-    right: 10px;
-    background-image: url('/assets/icons/clear-black-24px.svg');
-    background-color: transparent;
-    border: none;
-    height: 24px;
-    width: 24px;
-  }
-}

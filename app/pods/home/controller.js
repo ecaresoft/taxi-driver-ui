@@ -70,4 +70,9 @@ export default class HomeController extends Controller {
   invalidateSession() {
     this.session.invalidate();
   }
+
+  @action
+  closeNewTaxModal() {
+    this.shouldDisplayNewTax = false;
+  }
 }

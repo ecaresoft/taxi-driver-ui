@@ -7,12 +7,11 @@
     </button>
   {{/if}}
 
+  {{#if this.shouldDisplayInputs}}
+    <div local-class="content" class="content">
 
-  <div local-class="content {{if this.shouldContainHardInput "hard-input"}}" class="content">
+      <p local-class="id-label">{{this.draftRule._id}}</p>
 
-    <p local-class="id-label">{{this.draftRule._id}}</p>
-
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field country-input">
         <label>Country: </label>
         <select {{on 'change' this.setSelectedCountry}}>
@@ -23,42 +22,31 @@
           {{/each}}
         </select>
       </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field name-input">
         <label>Tax Name: </label>
         <Input @type="text" @value={{this.draftRule.taxName}} @spellcheck="false" />
       </div>
-    {{/if}}
 
-    <div local-class="input-field date-input">
-      <label>Valid from: </label>
-      <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidFrom}} @dateFormat="Z"
-        @onChange={{fn (mut this.selectedValidFrom)}} @placeholder="Select Date" />
-      <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
-    </div>
+      <div local-class="input-field date-input">
+        <label>Valid from: </label>
+        <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidFrom}} @dateFormat="Z"
+          @onChange={{fn (mut this.selectedValidFrom)}} @placeholder="Select Date" />
+        <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
+      </div>
 
-    <div local-class="input-field date-input">
-      <label>Valid until: </label>
-      <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidUntil}} @dateFormat="Z"
-        @onChange={{fn (mut this.selectedValidUntil)}} @placeholder="Select Date" />
-      <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
-    </div>
+      <div local-class="input-field date-input">
+        <label>Valid until: </label>
+        <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidUntil}} @dateFormat="Z"
+          @onChange={{fn (mut this.selectedValidUntil)}} @placeholder="Select Date" />
+        <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
+      </div>
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field product-category-input">
         <label>Product category:</label>
         <Input @type="text" @value={{this.draftRule.category}} @spellcheck="false" />
       </div>
-    {{else if @rule.category}}
-      <div local-class="input-field product-category-input">
-        <label>Product category:</label>
-        <span>{{@rule.category}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field country-input">
         <label>Business Partner VAT: </label>
         <select {{on 'change' this.setSelectedBPVAT}}>
@@ -69,14 +57,7 @@
           {{/each}}
         </select>
       </div>
-    {{else if @rule.bpVAT}}
-      <div local-class="input-field country-input">
-        <label>Business Partner VAT: </label>
-        <span>{{@rule.bpVAT}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field country-input">
         <label>Organization VAT: </label>
         <select {{on 'change' this.setSelectedORGVAT}}>
@@ -87,14 +68,7 @@
           {{/each}}
         </select>
       </div>
-    {{else if @rule.orgVAT}}
-      <div local-class="input-field country-input">
-        <label>Organization VAT: </label>
-        <span>{{@rule.orgVAT}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field country-input">
         <label>Business Partner Type: </label>
         <select {{on 'change' this.setSelectedBPType}}>
@@ -105,38 +79,17 @@
           {{/each}}
         </select>
       </div>
-    {{else if @rule.bpType}}
-      <div local-class="input-field country-input">
-        <label>Business Partner Type: </label>
-        <span>{{@rule.bpType}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field">
         <label>DocType: </label>
         <Input @type="text" @value={{this.draftRule.docType}} />
       </div>
-    {{else if @rule.docType}}
-      <div local-class="input-field">
-        <label>DocType: </label>
-        <span>{{@rule.docType}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field">
         <label for="witholdingTax">Witholding TAX:</label>
         <Input @type="checkbox" @checked={{this.draftRule.whitholded}} disabled />
       </div>
-    {{else if this.shouldDisplayWitholded}}
-      <div local-class="input-field">
-        <label for="witholdingTax">Witholding TAX:</label>
-        <Input @type="checkbox" @checked={{this.draftRule.whitholded}} />
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field tax-type">
         <label>TAX Type:</label>
         <Input @type="checkbox" @checked={{this.isIncomeType}} />
@@ -144,152 +97,265 @@
         <Input @type="checkbox" @checked={{this.isExpenseType}} />
         <span>Expense</span>
       </div>
-    {{else if @rule.txType}}
-      <div local-class="input-field tax-type">
-        <label>TAX Type:</label>
-        <Input @type="checkbox" @checked={{this.isIncomeType}} disabled />
-        <span>Income</span>
-        <Input @type="checkbox" @checked={{this.isExpenseType}} disabled />
-        <span>Expense</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field tax-rate">
         <label>TAX Rate:</label>
         <Input @type="text" @value={{this.draftRule.rate}} @spellcheck="false" />
       </div>
-    {{else if @rule.rate}}
-      <div local-class="input-field tax-rate">
-        <label>TAX Rate:</label>
-        <span>{{@rule.rate}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayInputs}}
       <div local-class="input-field">
         <label>Amount: </label>
         <Input @type="text" @value={{this.draftRule.amount}} />
       </div>
-    {{else if @rule.amount}}
-      <div local-class="input-field">
-        <label>Amount: </label>
-        <span>{{@rule.amount}}</span>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayMeta}}
-      <label local-class="composed-fields-label">Meta</label>
-    {{/if}}
+      {{#if this.shouldDisplayMeta}}
+        <label local-class="composed-fields-label">Meta</label>
+      {{/if}}
 
-    <div local-class="composed-fields-container">
-      {{#if this.shouldDisplayInputs}}
+      <div local-class="composed-fields-container">
         <div local-class="input-field">
           <label>Exempt: </label>
           <Input @type="checkbox" @checked={{this.draftMeta.exempt}} />
         </div>
-      {{else if @rule.meta.exempt}}
-        <div local-class="input-field">
-          <label>Exempt: </label>
-          <Input @type="checkbox" @checked={{@rule.meta.exempt}} disabled />
-        </div>
-      {{/if}}
 
-      {{#if this.shouldDisplayInputs}}
         <div local-class="input-field">
           <label>Description: </label>
           <Input @type="text" @value={{this.draftMeta.description}} />
         </div>
-      {{else if @rule.meta.description}}
-        <div local-class="input-field">
-          <label>Description: </label>
-          <span>{{@rule.meta.description}}</span>
-        </div>
-      {{/if}}
 
-      {{#if this.shouldDisplayInputs}}
         <div local-class="input-field">
           <label>unspscCode: </label>
           <Input @type="text" @value={{this.draftMeta.unspscCode}} />
         </div>
-      {{else if @rule.meta.unspscCode}}
-        <div local-class="input-field">
-          <label>unspscCode: </label>
-          <span>{{@rule.meta.unspscCode}}</span>
-        </div>
-      {{/if}}
 
-      {{#if this.shouldDisplayInputs}}
         <div local-class="input-field">
           <label>unspscCodeDescription: </label>
           <Input @type="text" @value={{this.draftMeta.unspscCodeDescription}} />
         </div>
-      {{else if @rule.meta.unspscCodeDescription}}
-        <div local-class="input-field">
-          <label>unspscCodeDescription: </label>
-          <span>{{@rule.meta.unspscCodeDescription}}</span>
-        </div>
+
+      </div>
+
+      {{#if this.shouldDisplayVars}}
+        <label local-class="composed-fields-label">Vars</label>
       {{/if}}
 
-    </div>
-
-    {{#if this.shouldDisplayVars}}
-      <label local-class="composed-fields-label">Vars</label>
-    {{/if}}
-
-    <div local-class="composed-fields-container">
-      {{#if this.shouldDisplayInputs}}
+      <div local-class="composed-fields-container">
         <div local-class="input-field">
           <label>Escala: </label>
           <Input @type="text" @value={{this.draftVars.escala}} />
         </div>
-      {{else if @rule.vars.escala}}
-        <div local-class="input-field">
-          <label>Escala: </label>
-          <span>{{@rule.vars.escala}}</span>
-        </div>
-      {{/if}}
 
-      {{#if this.shouldDisplayInputs}}
         <div local-class="input-field">
           <label>Ret All: </label>
           <Input @type="text" @value={{this.draftVars.retAll}} />
         </div>
-      {{else if @rule.vars.retAll}}
-        <div local-class="input-field">
-          <label>Ret All: </label>
-          <span>{{@rule.vars.retAll}}</span>
-        </div>
-      {{/if}}
 
-      {{#if this.shouldDisplayInputs}}
         <div local-class="input-field">
           <label>Taxable: </label>
           <Input @type="text" @value={{this.draftVars.taxable}} />
         </div>
-      {{else if @rule.vars.taxable}}
-        <div local-class="input-field">
-          <label>Taxable: </label>
-          <span>{{@rule.vars.taxable}}</span>
+
+      </div>
+
+      {{#if this.editMode}}
+        <div local-class="edit-buttons">
+          <button type="button" {{on "click" (fn this.discardTaxEditions)}}>DISCARD</button>
+          <button type="submit" {{on "click" (fn this.openSaveModal)}}>SAVE</button>
+        </div>
+      {{/if}}
+      {{#if this.newTaxMode}}
+        <div local-class="edit-buttons">
+          <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
+          <button type="submit" {{on "click" (fn this.openSaveModal)}}>SAVE</button>
         </div>
       {{/if}}
 
+      {{#if this.shouldDisplaySaveModal}}
+        <ModalDialog @translucentOverlay="true">
+          <div class="save-editions-modal">
+            <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
+            <img src="/assets/icons/warning-24px.svg" class="warning-img" alt="" role="presentation" />
+            <p>Are you sure you want to save these changes?</p>
+            {{#if this.editMode}}
+              <div class="edit-buttons">
+                <button type="button" {{on "click" (fn this.closeModals)}}>DISCARD</button>
+                <button type="submit" {{on "click" (fn this.saveTaxEditions)}}>SAVE</button>
+              </div>
+            {{/if}}
+            {{#if this.newTaxMode}}
+              <div class="edit-buttons">
+                <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
+                <button type="submit" {{on "click" (fn this.saveNewTax)}}>SAVE</button>
+              </div>
+            {{/if}}
+          </div>
+        </ModalDialog>
+      {{/if}}
+
+      {{#if this.shouldDisplayConfirmationModal}}
+        <ModalDialog @translucentOverlay="true">
+          {{#if this.editMode}}
+            <div class="confirmation-modal">
+              <button type="button" class="close-modal-icon" {{on "click" (fn this.finishTaxEditionsSave)}} />
+              <p>Changes have been successfully saved!</p>
+            </div>
+          {{/if}}
+          {{#if this.newTaxMode}}
+            <div class="confirmation-modal">
+              <button type="button" class="close-modal-icon" {{on "click" (fn this.closeNewTaxModal)}} />
+              <p>Changes have been successfully saved!</p>
+            </div>
+          {{/if}}
+        </ModalDialog>
+      {{/if}}
+
     </div>
+  {{else}}
+    <div local-class="content hard-input" class="content">
 
-    {{#if this.newTaxMode}}
-      <div local-class="edit-buttons">
-        <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
-        <button type="submit" {{on "click" (fn this.openSaveModal)}}>SAVE</button>
+      <div local-class="input-field date-input">
+        <label>Valid from: </label>
+        <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidFrom}} @dateFormat="Z"
+          @onChange={{fn (mut this.selectedValidFrom)}} @placeholder="Select Date" />
+        <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
       </div>
-    {{/if}}
-    {{#if this.editMode}}
-      <div local-class="edit-buttons">
-        <button type="button" {{on "click" (fn this.discardTaxEditions)}}>DISCARD</button>
-        <button type="submit" {{on "click" (fn this.openSaveModal)}}>SAVE</button>
-      </div>
-    {{/if}}
 
-    {{#if this.shouldDisplayMoreButton}}
+      <div local-class="input-field date-input">
+        <label>Valid until: </label>
+        <EmberFlatpickr local-class="date-picker" @value={{readonly this.selectedValidUntil}} @dateFormat="Z"
+          @onChange={{fn (mut this.selectedValidUntil)}} @placeholder="Select Date" />
+        <img src="/assets/icons/event-24px.svg" alt="" role="presentation" local-class="calendar-icon" />
+      </div>
+
+      {{#if @rule.category}}
+        <div local-class="input-field product-category-input">
+          <label>Product category:</label>
+          <span>{{@rule.category}}</span>
+        </div>
+      {{/if}}
+
+      {{#if @rule.bpVAT}}
+        <div local-class="input-field country-input">
+          <label>Business Partner VAT: </label>
+          <span>{{@rule.bpVAT}}</span>
+        </div>
+      {{/if}}
+
+      {{#if @rule.orgVAT}}
+        <div local-class="input-field country-input">
+          <label>Organization VAT: </label>
+          <span>{{@rule.orgVAT}}</span>
+        </div>
+      {{/if}}
+
+      {{#if @rule.bpType}}
+        <div local-class="input-field country-input">
+          <label>Business Partner Type: </label>
+          <span>{{@rule.bpType}}</span>
+        </div>
+      {{/if}}
+
+      {{#if @rule.docType}}
+        <div local-class="input-field">
+          <label>DocType: </label>
+          <span>{{@rule.docType}}</span>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayWitholded}}
+        <div local-class="input-field">
+          <label for="witholdingTax">Witholding TAX:</label>
+          <Input @type="checkbox" @checked={{this.draftRule.whitholded}} />
+        </div>
+      {{/if}}
+
+      {{#if @rule.txType}}
+        <div local-class="input-field tax-type">
+          <label>TAX Type:</label>
+          <Input @type="checkbox" @checked={{this.isIncomeType}} disabled />
+          <span>Income</span>
+          <Input @type="checkbox" @checked={{this.isExpenseType}} disabled />
+          <span>Expense</span>
+        </div>
+      {{/if}}
+
+      {{#if @rule.rate}}
+        <div local-class="input-field tax-rate">
+          <label>TAX Rate:</label>
+          <span>{{@rule.rate}}</span>
+        </div>
+      {{/if}}
+
+      {{#if @rule.amount}}
+        <div local-class="input-field">
+          <label>Amount: </label>
+          <span>{{@rule.amount}}</span>
+        </div>
+      {{/if}}
+
+      {{#if this.shouldDisplayMeta}}
+        <label local-class="composed-fields-label">Meta</label>
+      {{/if}}
+
+      <div local-class="composed-fields-container">
+        {{#if @rule.meta.exempt}}
+          <div local-class="input-field">
+            <label>Exempt: </label>
+            <Input @type="checkbox" @checked={{@rule.meta.exempt}} disabled />
+          </div>
+        {{/if}}
+
+        {{#if @rule.meta.description}}
+          <div local-class="input-field">
+            <label>Description: </label>
+            <span>{{@rule.meta.description}}</span>
+          </div>
+        {{/if}}
+
+        {{#if @rule.meta.unspscCode}}
+          <div local-class="input-field">
+            <label>unspscCode: </label>
+            <span>{{@rule.meta.unspscCode}}</span>
+          </div>
+        {{/if}}
+
+        {{#if @rule.meta.unspscCodeDescription}}
+          <div local-class="input-field">
+            <label>unspscCodeDescription: </label>
+            <span>{{@rule.meta.unspscCodeDescription}}</span>
+          </div>
+        {{/if}}
+
+      </div>
+
+      {{#if this.shouldDisplayVars}}
+        <label local-class="composed-fields-label">Vars</label>
+      {{/if}}
+
+      <div local-class="composed-fields-container">
+        {{#if @rule.vars.escala}}
+          <div local-class="input-field">
+            <label>Escala: </label>
+            <span>{{@rule.vars.escala}}</span>
+          </div>
+        {{/if}}
+
+        {{#if @rule.vars.retAll}}
+          <div local-class="input-field">
+            <label>Ret All: </label>
+            <span>{{@rule.vars.retAll}}</span>
+          </div>
+        {{/if}}
+
+        {{#if @rule.vars.taxable}}
+          <div local-class="input-field">
+            <label>Taxable: </label>
+            <span>{{@rule.vars.taxable}}</span>
+          </div>
+        {{/if}}
+
+      </div>
+
       <div local-class="display-menu dropdown">
         <button local-class="more dropbtn {{if this.shouldDisplayMorePanel "open" "closed"}}" type="button"
           {{on "click" (fn this.toggleOptionsPanel)}} />
@@ -297,51 +363,11 @@
           <div local-class="dropdown-content">
             <button {{on "click" (fn this.toggleEditMode)}} type="button"><img src="/assets/icons/create-24px.svg"
                 alt="presentation" />Edit</button>
-            <button type="button"><img src="/assets/icons/delete-24px.svg" alt="presentation" />Delete</button>
           </div>
         {{/if}}
       </div>
-    {{/if}}
 
-    {{#if this.shouldDisplaySaveModal}}
-      <ModalDialog @translucentOverlay="true">
-        <div class="save-editions-modal">
-          <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
-          <img src="/assets/icons/warning-24px.svg" class="warning-img" alt="" role="presentation" />
-          <p>Are you sure you want to save these changes?</p>
-          {{#if this.editMode}}
-            <div class="edit-buttons">
-              <button type="button" {{on "click" (fn this.closeModals)}}>DISCARD</button>
-              <button type="submit" {{on "click" (fn this.saveTaxEditions)}}>SAVE</button>
-            </div>
-          {{/if}}
-          {{#if this.newTaxMode}}
-            <div class="edit-buttons">
-              <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
-              <button type="submit" {{on "click" (fn this.saveNewTax)}}>SAVE</button>
-            </div>
-          {{/if}}
-        </div>
-      </ModalDialog>
-    {{/if}}
-
-    {{#if this.shouldDisplayConfirmationModal}}
-      <ModalDialog @translucentOverlay="true">
-        {{#if this.editMode}}
-          <div class="confirmation-modal">
-            <button type="button" class="close-modal-icon" {{on "click" (fn this.finishTaxEditionsSave)}} />
-            <p>Changes have been successfully saved!</p>
-          </div>
-        {{/if}}
-        {{#if this.newTaxMode}}
-          <div class="confirmation-modal">
-            <button type="button" class="close-modal-icon" {{on "click" (fn this.closeNewTaxModal)}} />
-            <p>Changes have been successfully saved!</p>
-          </div>
-        {{/if}}
-      </ModalDialog>
-    {{/if}}
-
-  </div>
+    </div>
+  {{/if}}
 
 </div>

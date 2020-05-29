@@ -12,7 +12,7 @@ export default class TaxComponent extends Component {
   @tracked editMode = false;
   newTaxMode = this.args.newTaxMode;
 
-  /* Variables holding information about the model */
+  /* Variables holding the user selected information about the model */
   @tracked draftRule;
   @tracked selectedCountry;
   @tracked selectedValidFrom;
@@ -44,6 +44,7 @@ export default class TaxComponent extends Component {
   @tracked shouldDisplaySaveModal = false;
   @tracked shouldDisplayConfirmationModal = false;
 
+  /* Shortcut to read the given rule and country */
   get rule() {
     return this.args.rule;
   }
@@ -51,22 +52,13 @@ export default class TaxComponent extends Component {
     return this.args.countries;
   }
 
+  /* Variables marking if certain inputs should be displayed */
   get shouldDisplayInputs() {
     return (this.editMode || this.newTaxMode);
-  }
-  get shouldDisplayDropdownMenu() {
-    return !this.shouldDisplayInputs;
-  }
-  get shouldContainHardInput() {
-    return !this.shouldDisplayInputs;
-  }
-  get shouldDisplayMoreButton() {
-    return !this.shouldDisplayInputs;
   }
   get shouldDisplayCollapsibleButton() {
     return !(this.newTaxMode);
   }
-
   get shouldDisplayWitholded() {
     return this.draftRule.whitholded !== null && this.draftRule.whitholded !== undefined;
   }
@@ -80,8 +72,8 @@ export default class TaxComponent extends Component {
     return this.shouldDisplayInputs || Object.keys(this.rule.vars || {}).length > 0;
   }
 
-  @action
-  draftRuleSetup() {
+  /** Loads local variables with data from incoming model */
+  @action draftRuleSetup() {
     if (this.args.rule) {
       this.draftRule = JSON.parse(JSON.stringify(this.args.rule));
 
@@ -109,6 +101,7 @@ export default class TaxComponent extends Component {
     }
   }
 
+  /* Updating the selected values via controller */
   @action setSelectedCountry(event) {
     this.selectedCountry = event.target.value;
   }
@@ -122,66 +115,51 @@ export default class TaxComponent extends Component {
     this.selectedORGVAT = event.target.value;
   }
 
-  @action
-  toggleOpenCard() {
+  /* Update view values on certain actions */
+  @action toggleOpenCard() {
     this.shouldDisplayOpenCard = !this.shouldDisplayOpenCard;
+    this.editMode = false;
   }
-
-  @action
-  toggleOptionsPanel() {
+  @action toggleOptionsPanel() {
     this.shouldDisplayMorePanel = !this.shouldDisplayMorePanel;
   }
-
-  @action
-  toggleEditMode() {
+  @action toggleEditMode() {
     this.editMode = !this.editMode;
     this.shouldDisplayMorePanel = false;
   }
 
-  @action
-  discardTaxEditions() {
+  /** Returns everything to the initial state */
+  @action discardTaxEditions() {
     this.editMode = false;
     this.draftRuleSetup();
   }
 
-  @action
-  openSaveModal() {
+  @action openSaveModal() {
     // Save TAX Editions logic
     this.shouldDisplaySaveModal = true;
   }
 
-  @action
-  closeModals() {
+  @action closeModals() {
     // close save modal logic
     this.shouldDisplaySaveModal = false;
     this.shouldDisplayConfirmationModal = false;
   }
 
-  @action
-  finishTaxEditionsSave() {
+  @action finishTaxEditionsSave() {
     this.closeModals();
     this.editMode = false;
     this.shouldDisplayOpenCard = false;
   }
 
-  @action
-  openTaxSaveModal() {
-    // Save TAX Editions logic
-    this.shouldDisplaySaveModal = true;
-  }
-
   /* Home controller */
-  @action
-  saveNewTax() {
+  @action saveNewTax() {
     this.taxSaveSetup();
 
     this.args.saveNewTax(this.draftRule);
     this.shouldDisplaySaveModal = false;
     this.shouldDisplayConfirmationModal = true;
   }
-
-  @action
-  saveTaxEditions() {
+  @action saveTaxEditions() {
     this.taxSaveSetup();
 
     this.args.saveTaxEditions(this.draftRule);
@@ -189,8 +167,8 @@ export default class TaxComponent extends Component {
     this.shouldDisplayConfirmationModal = true;
   }
 
-  @action
-  taxSaveSetup() {
+  /** Reading the values from components and assigning them to the current model */
+  @action taxSaveSetup() {
     this.draftRule.country = this.selectedCountry;
 
     if (this.isIncomeType) {
@@ -218,8 +196,7 @@ export default class TaxComponent extends Component {
 
   }
 
-  @action
-  closeNewTaxModal() {
+  @action closeNewTaxModal() {
     this.args.closeNewTaxModal();
   }
 }

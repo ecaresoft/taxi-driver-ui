@@ -22,7 +22,8 @@
 
 {{#if this.shouldDisplayNewTax}}
   <ModalDialog @translucentOverlay="true" @onClickOverlay={{this.closeHomeModals}}>
-    <Tax @newTaxMode="true" @countries={{@model.countries}} @saveNewTax={{this.saveNewTax}} />
+    <Tax @newTaxMode="true" @countries={{@model.countries}} @saveNewTax={{this.saveNewTax}}
+      @closeNewTaxModal={{this.closeNewTaxModal}} />
   </ModalDialog>
 {{/if}}
 

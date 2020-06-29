@@ -21,6 +21,8 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      baseUrl: '',
+      basePath: 'api'
     }
   };
 
@@ -44,9 +46,15 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
   }
 
+  if (environment === 'staging') {
+    ENV.APP.baseUrl = 'http://taxi-driver-stg-lb-284963706.us-west-2.elb.amazonaws.com:3000';
+  }
+
   if (environment === 'production') {
     // here you can enable a production-specific feature
   }
+
+  ENV.APP.apiUrl = `${ENV.APP.baseUrl}/${ENV.APP.basePath}`;
 
   return ENV;
 };

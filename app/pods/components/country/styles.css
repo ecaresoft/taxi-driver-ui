@@ -1,6 +1,5 @@
 .country-component {
   min-width: 300px;
-  
   .country-label {
     font-size: 1.25em;
     border-bottom: var(--text-color-lighter) solid 3px;
@@ -15,8 +14,15 @@
     }
   }
 
+  .country-body{
+    height: 700px;
+    overflow: auto;
+
+
   > :global(.tax-component) {
     font-size: 0.75em;
     margin: 1em 0;
   }
+}
+
 }

@@ -1,8 +1,13 @@
-<div class="tax-component {{if this.shouldDisplayOpenCard "open"}}" local-class="tax-component">
 
+{{#if (not-eq @rule.status "hidden")}}
+
+<div class="tax-component {{if this.shouldDisplayOpenCard "open"}}" local-class="tax-component {{@rule.status}}">
   {{#if this.shouldDisplayCollapsibleButton}}
     <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
-      <div><strong>Tax Name: </strong>{{@rule.taxName}} </div>
+      <div><strong>Tax Name: </strong>{{@rule.taxName}}
+      <strong>Rate: </strong> {{@rule.rate}} {{@rule.bpVAT}} {{@rule.orgVAT}}
+
+      </div>
       <aside class="expand-img" />
     </button>
   {{/if}}
@@ -15,6 +20,9 @@
       <div local-class="input-field country-input">
         <label>Country: </label>
         <select {{on 'change' this.setSelectedCountry}}>
+          <option selected disabled hidden>
+          --Choose a Country
+          </option>
           {{#each this.countries as |country|}}
             <option value="{{country.code}}" selected={{eq country.code this.selectedCountry}}>
               {{country.name}}
@@ -88,6 +96,11 @@
       <div local-class="input-field">
         <label for="witholdingTax">Witholding TAX:</label>
         <Input @type="checkbox" @checked={{this.draftRule.whitholded}} disabled />
+      </div>
+
+      <div local-class="input-field">
+          <label for="patientSaudi">Patient is Saudi</label>
+          <Input @type="checkbox" @checked={{this.draftRule.patientSaudi}} />
       </div>
 
       <div local-class="input-field tax-type">
@@ -176,7 +189,7 @@
             <button type="button" class="close-modal-icon" {{on "click" (fn this.closeModals)}} />
             <img src="/assets/icons/warning-24px.svg" class="warning-img" alt="" role="presentation" />
             <p>Are you sure you want to save these changes?</p>
-            {{#if this.editMode}}
+            {{#if (and this.editMode (not this.isDeleting))}}
               <div class="edit-buttons">
                 <button type="button" {{on "click" (fn this.closeModals)}}>DISCARD</button>
                 <button type="submit" {{on "click" (fn this.saveTaxEditions)}}>SAVE</button>
@@ -186,6 +199,13 @@
               <div class="edit-buttons">
                 <button type="button" {{on "click" (fn this.closeNewTaxModal)}}>DISCARD</button>
                 <button type="submit" {{on "click" (fn this.saveNewTax)}}>SAVE</button>
+              </div>
+            {{/if}}
+            {{#if this.isDeleting}}
+            <strong>This can cause serious problems</strong>
+              <div class="edit-buttons">
+                <button type="button" {{on "click" (fn this.closeModals)}}>DISCARD</button>
+                <button type="submit" {{on "click" (fn this.deleteTaxPersistent)}}>ERASE PERMANENTLY</button>
               </div>
             {{/if}}
           </div>
@@ -279,6 +299,13 @@
         </div>
       {{/if}}
 
+      {{#if (and @rule.patientSaudi (eq  @rule.country "sa"))}}
+        <div local-class="input-field">
+          <label> Patient is Saudi</label>
+          <Input @type="checkbox" @checked={{this.draftRule.patientSaudi}}  />
+        </div>
+      {{/if}}
+
       {{#if @rule.rate}}
         <div local-class="input-field tax-rate">
           <label>TAX Rate:</label>
@@ -363,6 +390,10 @@
           <div local-class="dropdown-content">
             <button {{on "click" (fn this.toggleEditMode)}} type="button"><img src="/assets/icons/create-24px.svg"
                 alt="presentation" />Edit</button>
+            <button {{on "click" (fn this.hideTaxRule)}} type="button"><img src="/assets/icons/warning-24px.svg"
+                alt="presentation" />Hide</button>
+            <button {{on "click" (fn this.deleteTax)}} type="button"><img src="/assets/icons/delete-24px.svg"
+                alt="presentation" /><strong local-class="delete">Delete</strong></button>
           </div>
         {{/if}}
       </div>
@@ -371,3 +402,4 @@
   {{/if}}
 
 </div>
+{{/if}}

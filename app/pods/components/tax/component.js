@@ -37,12 +37,13 @@ export default class TaxComponent extends Component {
   @tracked draftVars;
   @tracked isIncomeType;
   @tracked isExpenseType;
-
+  @tracked patientSaudi
   /* Information regarding the component behaviour */
   @tracked shouldDisplayOpenCard = this.newTaxMode;
   @tracked shouldDisplayMorePanel = false;
   @tracked shouldDisplaySaveModal = false;
   @tracked shouldDisplayConfirmationModal = false;
+  @tracked isDeleting = false;
 
   /* Shortcut to read the given rule and country */
   get rule() {
@@ -92,6 +93,7 @@ export default class TaxComponent extends Component {
 
       this.isIncomeType = this.draftRule.txType === "income";
       this.isExpenseType = this.draftRule.txType === "expense";
+      this.patientSaudi = this.draftRule.patientSaudi;
 
     } else {
       this.draftRule = {};
@@ -128,6 +130,22 @@ export default class TaxComponent extends Component {
     this.shouldDisplayMorePanel = false;
   }
 
+  @action hideTaxRule(){
+    this.editMode = true;
+    this.shouldDisplaySaveModal = true;
+    this.draftRule.status =  "hidden"; 
+  }
+  @action deleteTax(){
+    this.isDeleting = true;
+    this.editMode = true;
+    this.shouldDisplaySaveModal = true;
+  }
+
+  @action deleteTaxPersistent(){
+    this.args.deleteTax(this.args.rule._id);
+    this.isDeleting = false;
+    this.shouldDisplaySaveModal = false;
+  }
   /** Returns everything to the initial state */
   @action discardTaxEditions() {
     this.editMode = false;
@@ -143,6 +161,7 @@ export default class TaxComponent extends Component {
     // close save modal logic
     this.shouldDisplaySaveModal = false;
     this.shouldDisplayConfirmationModal = false;
+    this.isDeleting = false;
   }
 
   @action finishTaxEditionsSave() {

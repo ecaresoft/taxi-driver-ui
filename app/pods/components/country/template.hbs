@@ -2,7 +2,9 @@
   <div local-class="country-label">
     <p>{{@rulesGroup.countryName}}</p>
   </div>
+  <div local-class="country-body">
   {{#each @rulesGroup.rules as |taxRule|}}
-    <Tax @rule={{taxRule}} @countries={{@countries}} @saveTaxEditions={{@saveTaxEditions}} />
+    <Tax @rule={{taxRule}} @countries={{@countries}} @saveTaxEditions={{@saveTaxEditions}} @deleteTax={{@deleteTax}} />
   {{/each}}
+  </div>
 </div>

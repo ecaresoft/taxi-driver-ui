@@ -12,10 +12,12 @@ export default class RuleModel extends Model {
   @attr('string') orgVAT;
   @attr('string') bpType;
   @attr('string') docType;
+  @attr('boolean') patientSaudi;
   @attr('boolean') whitholded;
   @attr('string') txType;
   @attr('string') rate;
   @attr('string') amount;
+  @attr('string') status;
   @attr meta;
   @attr vars;
 
@@ -36,7 +38,9 @@ export default class RuleModel extends Model {
       rate: this.rate,
       amount: this.amount,
       meta: this.meta,
-      vars: this.vars
+      vars: this.vars,
+      status: this.status,
+      patientSaudi: this.patientSaudi
     };
   }
 }

@@ -47,6 +47,17 @@ export default class HomeController extends Controller {
 
     window.location.reload(true);
   }
+  @action
+  deleteTax(taxId){
+    let rule = this.store.peekRecord('rule', taxId);
+    let user = this.userLogged;
+    rule.deleteRecord();
+    rule.isDeleted; 
+    rule.save();
+    const log = this.store.createRecord('log', {message:  `${user} deleted tax ${rule.taxName} with id ${taxId}`});
+    log.save();
+    window.location.reload(true);
+  }
 
   @action
   saveTaxEditions(updatedTax) {

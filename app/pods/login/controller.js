@@ -8,6 +8,8 @@ export default class LoginController extends Controller {
   @service session;
   @tracked authTimes = 0;
 
+  
+
   @action
   async authenticate(user, password) {
     try {

@@ -1,0 +1,99 @@
+stages:
+  - build
+  - test
+  - deployment
+
+build_image:
+  stage: build
+  variables:
+    EMBER_ENV: 'development'
+    DOCKER_TAG: '$CI_COMMIT_SHORT_SHA'
+  script:
+    - "docker-compose build"
+  except:
+    - develop
+    - master
+
+build_staging_image:
+  stage: build
+  variables:
+    EMBER_ENV: 'staging'
+    DOCKER_TAG: 'staging'
+  script:
+    - "docker-compose build"
+  only:
+    - develop
+
+build_production_image:
+  stage: build
+  variables:
+    EMBER_ENV: 'cap'
+    DOCKER_TAG: 'cap'
+  script:
+    - "docker-compose build"
+  only:
+    - master
+
+run_tests:
+  stage: test
+  variables:
+    DOCKER_TAG: '$CI_COMMIT_SHORT_SHA'
+  before_script:
+    - "docker-compose up -d"
+  script:
+    - "docker-compose exec -T front ember test"
+  after_script:
+    - "docker-compose down"
+  except:
+    - develop
+    - master
+
+run_staging_tests:
+  stage: test
+  variables:
+    DOCKER_TAG: 'staging'
+  before_script:
+    - "docker-compose up -d"
+  script:
+    - "docker-compose exec -T front ember test"
+  after_script:
+    - "docker-compose down"
+  only:
+    - develop
+
+run_production_tests:
+  stage: test
+  variables:
+    DOCKER_TAG: 'cap'
+  before_script:
+    - "docker-compose up -d"
+  script:
+    - "docker-compose exec -T front ember test"
+  after_script:
+    - "docker-compose down"
+  only:
+    - master
+
+deploy_staging:
+  stage: deployment
+  variables:
+    DOCKER_TAG: 'staging'
+    AWS_ACCESS_KEY_ID: '$AWS_ACCESS_KEY_STAGING'
+    AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_KEY_STAGING'
+    AWS_DEFAULT_REGION: '$AWS_REGION_STAGING'
+  environment:
+    name: staging
+    url: http://ecs-dev-taxi-driver-staging.s3-website-us-west-2.amazonaws.com
+  before_script:
+    - "mkdir -p dist"
+    - "docker-compose up -d"
+  script:
+    - "docker cp $(docker-compose ps -q front):myapp/dist ."
+    - "aws s3 cp dist s3://ecs-dev-taxi-driver-staging --recursive --exclude '*.svg'"
+    - "aws s3 cp dist s3://ecs-dev-taxi-driver-staging --recursive --exclude '*' --include '*.svg' --content-type 'image/svg+xml'"
+  after_script:
+    - "rm -rf dist"
+    - "docker-compose down"
+  only:
+    - develop
+

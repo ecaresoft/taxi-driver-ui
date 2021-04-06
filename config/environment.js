@@ -47,7 +47,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
-    ENV.APP.baseUrl = 'http://taxi-driver-stg-lb-284963706.us-west-2.elb.amazonaws.com:3000';
+    ENV.APP.baseUrl = 'http://taxi-driver-db-staging.ecs-apis.com';
   }
 
   if (environment === 'production') {

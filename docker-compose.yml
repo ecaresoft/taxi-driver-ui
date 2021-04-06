@@ -1,0 +1,10 @@
+version: '3'
+services:
+  front:
+    image: "tax_engine_front:${DOCKER_TAG:-latest}"
+    build:
+      context: ./
+      args:
+        - EMBER_ENV=${EMBER_ENV:-development}
+    ports:
+      - "4200:4200"

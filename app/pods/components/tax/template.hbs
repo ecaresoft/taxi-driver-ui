@@ -103,6 +103,11 @@
           <Input @type="checkbox" @checked={{this.draftRule.patientSaudi}} />
       </div>
 
+      <div local-class="input-field">
+          <label for="bpIsPatient">B Partner Is The Patient</label>
+          <Input @type="checkbox" @checked={{this.draftRule.bpIsPatient}} />
+      </div>
+
       <div local-class="input-field tax-type">
         <label>TAX Type:</label>
         <Input @type="checkbox" @checked={{this.isIncomeType}} />
@@ -306,6 +311,13 @@
         </div>
       {{/if}}
 
+      {{#if @rule.bpIsPatient}}
+      <div local-class="input-field">
+          <label >B. Partner Is The Patient</label>
+          <Input @type="checkbox" @checked={{this.draftRule.bpIsPatient}} />
+      </div>
+      {{/if}}
+      
       {{#if @rule.rate}}
         <div local-class="input-field tax-rate">
           <label>TAX Rate:</label>

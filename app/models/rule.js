@@ -13,6 +13,7 @@ export default class RuleModel extends Model {
   @attr('string') bpType;
   @attr('string') docType;
   @attr('boolean') patientSaudi;
+  @attr('boolean') bpIsPatient;
   @attr('boolean') whitholded;
   @attr('string') txType;
   @attr('string') rate;
@@ -40,7 +41,8 @@ export default class RuleModel extends Model {
       meta: this.meta,
       vars: this.vars,
       status: this.status,
-      patientSaudi: this.patientSaudi
+      patientSaudi: this.patientSaudi,
+      bpIsPatient: this.bpIsPatient
     };
   }
 }

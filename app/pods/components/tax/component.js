@@ -37,7 +37,8 @@ export default class TaxComponent extends Component {
   @tracked draftVars;
   @tracked isIncomeType;
   @tracked isExpenseType;
-  @tracked patientSaudi
+  @tracked patientSaudi;
+  @tracked bpIsPatient;
   /* Information regarding the component behaviour */
   @tracked shouldDisplayOpenCard = this.newTaxMode;
   @tracked shouldDisplayMorePanel = false;
@@ -94,7 +95,7 @@ export default class TaxComponent extends Component {
       this.isIncomeType = this.draftRule.txType === "income";
       this.isExpenseType = this.draftRule.txType === "expense";
       this.patientSaudi = this.draftRule.patientSaudi;
-
+      this.bpIsPatient = this.draftRule.bpIsPatient;
     } else {
       this.draftRule = {};
 

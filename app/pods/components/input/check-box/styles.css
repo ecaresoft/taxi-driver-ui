@@ -1,0 +1,56 @@
+.check-box {
+  font-size: 1.2rem;
+  width: 0.68em;
+  height: 0.68em;
+  border: solid 0.07em gray;
+  border-radius: 0.15em;
+  margin: 0.2em;
+  background: white;
+  cursor: pointer;
+  position: relative;
+}
+
+.check-box:not([disabled]):hover {
+  filter: contrast(5) grayscale(0.25);
+}
+
+.check-box[disabled] {
+  cursor: not-allowed;
+}
+
+.check-box.value-[disabled] {
+  background-color: #F9F9F9;
+  border-color: lightgray;
+}
+
+
+.value-:not([disabled]):hover {
+  border-color: black;
+}
+
+.value-true {
+  border-color: #0075ff;
+  background-color: #0075ff;
+}
+
+.value-true::before {
+  content: '\2713';
+  color: white;
+  font-size: 0.75em;
+  position: absolute;
+  font-weight: bold;
+  margin: -0.05em 0.05em 0.05em 0.05em;
+}
+
+.value-false {
+  border-color: crimson;
+  background-color: crimson;
+}
+.value-false::before {
+  content: '\25AC';
+  color: white;
+  font-size: 0.5em;
+  position: absolute;
+  font-weight: bold;
+  margin: 0 0.2em;
+}

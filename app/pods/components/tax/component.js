@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { tracked } from '@glimmer/tracking';
+import { set } from '@ember/object';
 
 
 export default class TaxComponent extends Component {
@@ -116,6 +117,10 @@ export default class TaxComponent extends Component {
   }
   @action setSelectedORGVAT(event) {
     this.selectedORGVAT = event.target.value;
+  }
+
+  @action changeValue(column, value) {
+    set(this, column, value);
   }
 
   /* Update view values on certain actions */

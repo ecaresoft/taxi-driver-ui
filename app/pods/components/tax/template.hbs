@@ -95,17 +95,17 @@
 
       <div local-class="input-field">
         <label for="witholdingTax">Witholding TAX:</label>
-        <Input @type="checkbox" @checked={{this.draftRule.whitholded}} disabled />
+        <Input::CheckBox @value={{this.draftRule.whitholded}} @onClick={{action this.changeValue "draftRule.whitholded"}} />
       </div>
 
       <div local-class="input-field">
           <label for="patientSaudi">Patient is Saudi</label>
-          <Input @type="checkbox" @checked={{this.draftRule.patientSaudi}} />
+          <Input::CheckBox @value={{this.draftRule.patientSaudi}} @onClick={{action this.changeValue "draftRule.patientSaudi"}} />
       </div>
 
       <div local-class="input-field">
           <label for="bpIsPatient">B Partner Is The Patient</label>
-          <Input @type="checkbox" @checked={{this.draftRule.bpIsPatient}} />
+          <Input::CheckBox @value={{this.draftRule.bpIsPatient}} @onClick={{action this.changeValue "draftRule.bpIsPatient"}} />
       </div>
 
       <div local-class="input-field tax-type">
@@ -290,7 +290,7 @@
       {{#if this.shouldDisplayWitholded}}
         <div local-class="input-field">
           <label for="witholdingTax">Witholding TAX:</label>
-          <Input @type="checkbox" @checked={{this.draftRule.whitholded}} />
+          <Input::CheckBox @value={{this.draftRule.whitholded}} @disabled=true />
         </div>
       {{/if}}
 
@@ -307,7 +307,7 @@
       {{#if (and @rule.patientSaudi (eq  @rule.country "sa"))}}
         <div local-class="input-field">
           <label> Patient is Saudi</label>
-          <Input @type="checkbox" @checked={{this.draftRule.patientSaudi}}  />
+          <Input::CheckBox @value={{this.draftRule.patientSaudi}} @disabled=true />
         </div>
       {{/if}}
 

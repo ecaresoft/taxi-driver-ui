@@ -23,7 +23,7 @@ export default class HomeController extends Controller {
     this.model.countries.forEach(c =>
       countryRules[c.code] = { "countryName": c.name, "rules": [] });
     this.model.rules.forEach(r =>
-      countryRules[r.country].rules.push(r.toJSON()));
+      countryRules[r.country].rules.push(r));
 
     return Object.values(countryRules);
   }

@@ -22,27 +22,4 @@ export default class RuleModel extends Model {
   @attr meta;
   @attr vars;
 
-  toJSON() {
-    return {
-      _id: this._id,
-      country: this.country,
-      taxName: this.taxName,
-      validFrom: this.validFrom,
-      validUntil: this.validUntil,
-      category: this.category,
-      bpVAT: this.bpVAT,
-      orgVAT: this.orgVAT,
-      bpType: this.bpType,
-      docType: this.docType,
-      whitholded: this.whitholded,
-      txType: this.txType,
-      rate: this.rate,
-      amount: this.amount,
-      meta: this.meta,
-      vars: this.vars,
-      status: this.status,
-      patientSaudi: this.patientSaudi,
-      bpIsPatient: this.bpIsPatient
-    };
-  }
 }

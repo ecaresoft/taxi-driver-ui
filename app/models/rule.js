@@ -12,9 +12,9 @@ export default class RuleModel extends Model {
   @attr('string') orgVAT;
   @attr('string') bpType;
   @attr('string') docType;
-  @attr('boolean') patientSaudi;
-  @attr('boolean') bpIsPatient;
-  @attr('boolean') whitholded;
+  @attr('boolean', { allowNull: true }) patientSaudi;
+  @attr('boolean', { allowNull: true }) bpIsPatient;
+  @attr('boolean', { allowNull: true }) whitholded;
   @attr('string') txType;
   @attr('string') rate;
   @attr('string') amount;

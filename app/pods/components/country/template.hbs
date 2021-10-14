@@ -4,7 +4,8 @@
   </div>
   <div local-class="country-body">
   {{#each @rulesGroup.rules as |taxRule|}}
-    <Tax @rule={{taxRule}} @countries={{@countries}} @saveTaxEditions={{@saveTaxEditions}} @deleteTax={{@deleteTax}} />
+    <Tax @rule={{taxRule}} @countries={{@countries}} @saveTaxEditions={{@saveTaxEditions}} @deleteTax={{@deleteTax}}
+    @dragCard={{@dragCard}} @dropCard={{@dropCard}} />
   {{/each}}
   </div>
 </div>

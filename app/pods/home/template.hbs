@@ -10,7 +10,8 @@
 <div local-class="countries-container">
   {{#each this.rulesGroupedByCountries as |rulesGroup|}}
     <Country @rulesGroup={{rulesGroup}} @countries={{@model.countries}} @saveNewTax={{this.saveNewTax}}
-      @saveTaxEditions={{this.saveTaxEditions}} @deleteTax={{this.deleteTax}}/>
+      @saveTaxEditions={{this.saveTaxEditions}} @deleteTax={{this.deleteTax}}
+      @dragCard={{this.dragCard}} @dropCard={{this.dropCard}} />
   {{/each}}
 </div>
 

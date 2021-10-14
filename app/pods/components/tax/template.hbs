@@ -1,12 +1,12 @@
 
 {{#if (not-eq @rule.status "hidden")}}
 
-<div class="tax-component {{if this.shouldDisplayOpenCard "open"}}" local-class="tax-component {{@rule.status}}">
+<div class="tax-component {{if this.shouldDisplayOpenCard "open"}}" local-class="tax-component {{@rule.status}}" {{on "drop" (fn this.dropCard @rule)}} {{on "dragover" (fn this.dragOver)}}>
   {{#if this.shouldDisplayCollapsibleButton}}
-    <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}}>
-      <div><strong>Tax Name: </strong>{{@rule.taxName}}
-      <strong>Rate: </strong> {{@rule.rate}} {{@rule.bpVAT}} {{@rule.orgVAT}}
-
+    <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}} {{on "dragstart" (fn @dragCard @rule)}} draggable="true">
+      <div>
+        <strong>Tax Name: </strong>{{@rule.taxName}}
+        <strong>Rate: </strong> {{@rule.rate}} {{@rule.bpVAT}} {{@rule.orgVAT}}
       </div>
       <aside class="expand-img" />
     </button>
@@ -317,7 +317,7 @@
           <Input @type="checkbox" @checked={{this.draftRule.bpIsPatient}} />
       </div>
       {{/if}}
-      
+
       {{#if @rule.rate}}
         <div local-class="input-field tax-rate">
           <label>TAX Rate:</label>

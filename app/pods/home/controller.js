@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import ENV from 'tax-engine-ui/config/environment';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -8,6 +9,8 @@ export default class HomeController extends Controller {
 
   @tracked shouldDisplayNewTax = false;
   @tracked shouldDisplayHistoryModal = false;
+
+  @tracked draggedCard;
 
   get userLogged() {
     return this.session.data.authenticated.username;
@@ -41,7 +44,12 @@ export default class HomeController extends Controller {
 
   @action
   saveNewTax(newTax) {
+    let position = this.model.rules.filter(function(rule) {
+      return rule.country === newTax.country;
+    }).length;
+
     newTax.lastUserUpdate = this.userLogged;
+    newTax.position = ++position;
     const record = this.store.createRecord('rule', newTax);
     record.save();
 
@@ -85,5 +93,20 @@ export default class HomeController extends Controller {
   @action
   closeNewTaxModal() {
     this.shouldDisplayNewTax = false;
+  }
+
+  @action
+  dragCard(rule) {
+    this.draggedCard = rule;
+  }
+
+  @action
+  dropCard(rule) {
+    if(this.draggedCard.country === rule.country) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = () => window.location.reload(true);
+      xhttp.open("POST", `${ENV.APP.apiUrl}/rules/${this.draggedCard.id}/move?position=${rule.position}`, true);
+      xhttp.send();
+    }
   }
 }

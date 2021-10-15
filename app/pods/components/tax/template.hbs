@@ -5,6 +5,7 @@
   {{#if this.shouldDisplayCollapsibleButton}}
     <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}} {{on "dragstart" (fn @dragCard @rule)}} draggable="true">
       <div>
+        {{@rule.sequence}}
         <strong>Tax Name: </strong>{{@rule.taxName}}
         <strong>Rate: </strong> {{@rule.rate}} {{@rule.bpVAT}} {{@rule.orgVAT}}
       </div>

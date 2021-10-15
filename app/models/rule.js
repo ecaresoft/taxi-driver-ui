@@ -19,7 +19,7 @@ export default class RuleModel extends Model {
   @attr('string') rate;
   @attr('string') amount;
   @attr('string') status;
-  @attr('number') position;
+  @attr('number') sequence;
   @attr meta;
   @attr vars;
 

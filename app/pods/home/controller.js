@@ -44,12 +44,8 @@ export default class HomeController extends Controller {
 
   @action
   saveNewTax(newTax) {
-    let position = this.model.rules.filter(function(rule) {
-      return rule.country === newTax.country;
-    }).length;
-
     newTax.lastUserUpdate = this.userLogged;
-    newTax.position = ++position;
+    newTax.sequence = ++this.model.rules.length;
     const record = this.store.createRecord('rule', newTax);
     record.save();
 
@@ -60,7 +56,7 @@ export default class HomeController extends Controller {
     let rule = this.store.peekRecord('rule', taxId);
     let user = this.userLogged;
     rule.deleteRecord();
-    rule.isDeleted; 
+    rule.isDeleted;
     rule.save();
     const log = this.store.createRecord('log', {message:  `${user} deleted tax ${rule.taxName} with id ${taxId}`});
     log.save();
@@ -105,7 +101,7 @@ export default class HomeController extends Controller {
     if(this.draggedCard.country === rule.country) {
       const xhttp = new XMLHttpRequest();
       xhttp.onload = () => window.location.reload(true);
-      xhttp.open("POST", `${ENV.APP.apiUrl}/rules/${this.draggedCard.id}/move?position=${rule.position}`, true);
+      xhttp.open("POST", `${ENV.APP.apiUrl}/rules/${this.draggedCard.id}/move?position=${rule.sequence}`, true);
       xhttp.send();
     }
   }

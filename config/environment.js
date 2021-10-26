@@ -48,7 +48,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
-    ENV.APP.baseUrl = 'http://taxi-driver-db-staging.ecs-apis.com';
+    ENV.APP.baseUrl = 'http://taxi-driver-staging.ecs-apis.com';
   }
 
   if (environment === 'production') {

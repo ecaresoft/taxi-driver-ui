@@ -1,6 +1,6 @@
 
 {{#if (not-eq @rule.status "hidden")}}
-
+{{! template-lint-disable no-inline-styles no-invalid-interactive }}
 <div class="tax-component {{if this.shouldDisplayOpenCard "open"}}" local-class="tax-component {{@rule.status}}" {{on "drop" (fn this.dropCard @rule)}} {{on "dragover" (fn this.dragOver)}}>
   {{#if this.shouldDisplayCollapsibleButton}}
     <button type="button" local-class="collapsible" {{on "click" (fn this.toggleOpenCard)}} {{on "dragstart" (fn @dragCard @rule)}} draggable="true">
@@ -96,17 +96,17 @@
 
       <div local-class="input-field">
         <label for="witholdingTax">Witholding TAX:</label>
-        <Input::CheckBox @value={{this.draftRule.whitholded}} @onClick={{action this.changeValue "draftRule.whitholded"}} />
+        <Input::CheckBox @value={{this.draftRule.whitholded}} @onClick={{fn this.changeValue "draftRule.whitholded"}} />
       </div>
 
       <div local-class="input-field">
           <label for="patientSaudi">Patient is Saudi</label>
-          <Input::CheckBox @value={{this.draftRule.patientSaudi}} @onClick={{action this.changeValue "draftRule.patientSaudi"}} />
+          <Input::CheckBox @value={{this.draftRule.patientSaudi}} @onClick={{fn this.changeValue "draftRule.patientSaudi"}} />
       </div>
 
       <div local-class="input-field">
           <label for="bpIsPatient">B Partner Is The Patient</label>
-          <Input::CheckBox @value={{this.draftRule.bpIsPatient}} @onClick={{action this.changeValue "draftRule.bpIsPatient"}} />
+          <Input::CheckBox @value={{this.draftRule.bpIsPatient}} @onClick={{fn this.changeValue "draftRule.bpIsPatient"}} />
       </div>
 
       <div local-class="input-field tax-type">
@@ -291,7 +291,7 @@
       {{#if this.shouldDisplayWitholded}}
         <div local-class="input-field">
           <label for="witholdingTax">Witholding TAX:</label>
-          <Input::CheckBox @value={{this.draftRule.whitholded}} @disabled=true />
+          <Input::CheckBox @value={{this.draftRule.whitholded}} @disabled="true" />
         </div>
       {{/if}}
 
@@ -308,7 +308,7 @@
       {{#if (and @rule.patientSaudi (eq  @rule.country "sa"))}}
         <div local-class="input-field">
           <label> Patient is Saudi</label>
-          <Input::CheckBox @value={{this.draftRule.patientSaudi}} @disabled=true />
+          <Input::CheckBox @value={{this.draftRule.patientSaudi}} @disabled="true" />
         </div>
       {{/if}}
 

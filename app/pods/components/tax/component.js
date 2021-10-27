@@ -139,7 +139,7 @@ export default class TaxComponent extends Component {
   @action hideTaxRule(){
     this.editMode = true;
     this.shouldDisplaySaveModal = true;
-    this.draftRule.status =  "hidden"; 
+    this.draftRule.status =  "hidden";
   }
   @action deleteTax(){
     this.isDeleting = true;
@@ -223,5 +223,15 @@ export default class TaxComponent extends Component {
 
   @action closeNewTaxModal() {
     this.args.closeNewTaxModal();
+  }
+
+  @action dragOver(event) {
+    event.preventDefault();
+  }
+
+  @action dropCard() {
+    if(this.args.dropCard) {
+      this.args.dropCard(...arguments);
+    }
   }
 }
